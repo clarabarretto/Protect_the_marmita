@@ -66,23 +66,31 @@ while True:
             exit()
         if event.type == KEYDOWN:
             if event.key == K_a and x != 0:
-                player.esquerda(x - 5, y)
-            if event.key == K_d and x != 1080 - 48:
-                player.direita(x + 5, y)
+                x -= 5
+                player.esquerda(x, y)
+            if event.key == K_d and x != 1030:
+                x += 5
+                player.direita(x, y)
             if event.key == K_w and y != 0:
-                player.cima(x, y - 5)
-            if event.key == K_s and y != 720 - 68:
-                player.baixo(x, y + 5)
+                y -= 5
+                player.cima(x, y)
+            if event.key == K_s and y != 650:
+                y += 5
+                player.baixo(x, y)
             if event.key == K_SPACE:
                 space = True
     if pygame.key.get_pressed()[K_a] and x != 0:
-        player.esquerda(x - 5, y)
-    if pygame.key.get_pressed()[K_d] and x != 1050 - 18:
-        player.direita(x + 5, y)
+        x -= 5
+        player.esquerda(x, y)
+    if pygame.key.get_pressed()[K_d] and x != 1030:
+        x += 5
+        player.direita(x, y)
     if pygame.key.get_pressed()[K_w] and y != 0:
-        player.cima(x, y - 5)
-    if pygame.key.get_pressed()[K_s] and y != 690 - 38:
-        player.baixo(x, y + 5)
+        y -= 5
+        player.cima(x, y)
+    if pygame.key.get_pressed()[K_s] and y != 650:
+        y += 5
+        player.baixo(x, y)
     ret2 = pygame.draw.rect(tela, (200, 0 , 0), (x2,y2, 80, 120))
     #if ret1.colliderect(ret2):#
        # points += 1#

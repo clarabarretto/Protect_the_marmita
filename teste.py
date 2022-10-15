@@ -102,6 +102,10 @@ player = Player(x , y)
 todas_as_sprites.add(player)
 inimigos = pygame.sprite.Group()
 while True:
+    var_direita = True
+    var_esquerda = True
+    var_cima = True
+    var_baixo = True
     spawn = choice(coordenadas)
     relogio.tick(30)
     tela.fill((0,0,0))
@@ -109,6 +113,18 @@ while True:
     text = fonte.render(mensage, False, (0, 0, 0))
     tela.blit(mapa, (0,0))
     var_inimigo = randint(0, 100)
+    rect = pygame.draw.rect(tela,(200, 100, 0), (x2, y2, 20, 20))
+    for sprite in todas_as_sprites:
+        if sprite.rect.colliderect(rect):
+            if x + 25 == x2:
+                var_direita = False
+            if (x2 + 15) <= x and x <= (x2 + 35):
+                var_esquerda = False
+            if y2 - 45 <= y and y <= y2 - 27:
+                var_baixo = False
+            if y2 + 10 <= y and y <= y2 + 37:
+                var_cima = False
+
     if 15 < var_inimigo < 20:
         inimigos.add(Enemies(spawn[1], spawn[0]))
     for event in pygame.event.get():
@@ -116,30 +132,30 @@ while True:
             pygame.quit()
             exit()
         if event.type == KEYDOWN:
-            if event.key == K_a and x != 0:
+            if event.key == K_a and x != 0 and var_esquerda == True:
                 x -= 5
                 player.esquerda(x, y)
-            if event.key == K_d and x != 1055:
+            if event.key == K_d and x != 1055 and var_direita == True:
                 x += 5
                 player.direita(x, y)
-            if event.key == K_w and y != 0:
+            if event.key == K_w and y != 0 and var_cima == True:
                 y -= 5
                 player.cima(x, y)
-            if event.key == K_s and y != 685:
+            if event.key == K_s and y != 685 and var_baixo == True:
                 y += 5
                 player.baixo(x, y)
             if event.key == K_SPACE:
                 space = True
-    if pygame.key.get_pressed()[K_a] and x != 0:
+    if pygame.key.get_pressed()[K_a] and x != 0 and var_esquerda == True:
         x -= 5
         player.esquerda(x, y)
-    if pygame.key.get_pressed()[K_d] and x != 1055:
+    if pygame.key.get_pressed()[K_d] and x != 1055 and var_direita == True:
         x += 5
         player.direita(x, y)
-    if pygame.key.get_pressed()[K_w] and y != 0:
+    if pygame.key.get_pressed()[K_w] and y != 0 and var_cima == True:
         y -= 5
         player.cima(x, y)
-    if pygame.key.get_pressed()[K_s] and y != 685:
+    if pygame.key.get_pressed()[K_s] and y != 685 and var_baixo == True:
         y += 5
         player.baixo(x, y)
     rect = pygame.draw.rect(tela,(200, 100, 0), (x2, y2, 20, 20))

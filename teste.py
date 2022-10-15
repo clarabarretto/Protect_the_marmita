@@ -1,4 +1,3 @@
-from pickle import TRUE
 import pygame
 from pygame.locals import *
 from sys import exit 
@@ -92,6 +91,44 @@ class Enemies(pygame.sprite.Sprite):
         elif 374 <= self.y <= 445 and self.x > 520:
             self.x -= 2
         self.rect.topleft = self.x, self.y
+class Bala(pygame.sprite.Sprite):
+    def __init__(self, x, y, z):
+        pygame.sprite.Sprite.__init__(self)
+        self.sprites = []
+        self.sprites.append(pygame.image.load('sprites/acido.png'))
+        self.atual = 0
+        self.image = self.sprites[self.atual]
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        self.movimento = z
+        self.rect.topleft = x, y
+    def bala_cima(self):
+        self.y -= 5
+        self.rect.topleft = self.x, self.y
+    def bala_baixo(self):
+        self.y += 5
+        self.rect.topleft = self.x, self.y
+    def bala_esquerda(self):
+        self.x -= 5
+        self.rect.topleft = self.x, self.y
+    def bala_direita(self):
+        self.x += 5
+        self.rect.topleft = self.x, self.y
+    def movimentobala(self):
+        if self.movimento == 'cima':
+            self.y -= 5
+            self.rect.topleft = self.x, self.y
+        if self.movimento == 'baixo':
+            self.y += 5
+            self.rect.topleft = self.x, self.y
+        if self.movimento == 'esquerda':
+            self.x -= 5
+            self.rect.topleft = self.x, self.y
+        if self.movimento == 'direita':
+            self.x += 5
+            self.rect.topleft = self.x, self.y
+
 
 
         
@@ -101,11 +138,14 @@ todas_as_sprites = pygame.sprite.Group()
 player = Player(x , y)
 todas_as_sprites.add(player)
 inimigos = pygame.sprite.Group()
+bala = pygame.sprite.Group()
+var_tiro = 7
 while True:
     var_direita = True
     var_esquerda = True
     var_cima = True
     var_baixo = True
+    var_tiro += 1
     spawn = choice(coordenadas)
     relogio.tick(30)
     tela.fill((0,0,0))
@@ -114,6 +154,8 @@ while True:
     tela.blit(mapa, (0,0))
     var_inimigo = randint(0, 100)
     rect = pygame.draw.rect(tela,(200, 100, 0), (x2, y2, 20, 20))
+    for tiro in bala:
+        tiro.movimentobala()
     for sprite in todas_as_sprites:
         if sprite.rect.colliderect(rect):
             if x + 25 == x2:
@@ -124,7 +166,16 @@ while True:
                 var_baixo = False
             if y2 + 10 <= y and y <= y2 + 37:
                 var_cima = False
-
+    for tiro in bala:
+        for enemies in inimigos:
+            if tiro.rect.colliderect(enemies):
+                bala.remove(tiro)
+                inimigos.remove(enemies)
+                points += 1
+    for tiro in bala:
+        if tiro.rect.colliderect(rect):
+            bala.remove(tiro)
+    
     if 15 < var_inimigo < 20:
         inimigos.add(Enemies(spawn[1], spawn[0]))
     for event in pygame.event.get():
@@ -146,6 +197,18 @@ while True:
                 player.baixo(x, y)
             if event.key == K_SPACE:
                 space = True
+            if event.key == K_UP and var_tiro >= 8:
+                bala.add(Bala(x + 12, y - 1, 'cima'))
+                var_tiro = 0
+            if event.key == K_DOWN and var_tiro >= 8:
+                bala.add(Bala(x + 12, y + 25, 'baixo'))
+                var_tiro = 0
+            if event.key == K_LEFT and var_tiro >= 8:
+                bala.add(Bala(x - 1, y + 17, 'esquerda'))
+                var_tiro = 0
+            if event.key == K_RIGHT and var_tiro >= 8:
+                bala.add(Bala(x + 25, y + 17, 'direita'))
+                var_tiro = 0
     if pygame.key.get_pressed()[K_a] and x != 0 and var_esquerda == True:
         x -= 5
         player.esquerda(x, y)
@@ -158,12 +221,24 @@ while True:
     if pygame.key.get_pressed()[K_s] and y != 685 and var_baixo == True:
         y += 5
         player.baixo(x, y)
+    if pygame.key.get_pressed()[K_UP] and var_tiro >= 8:
+        bala.add(Bala(x + 12, y - 1, 'cima'))
+        var_tiro = 0
+    if pygame.key.get_pressed()[K_DOWN] and var_tiro >= 8:
+        bala.add(Bala(x + 12, y + 25, 'baixo'))
+        var_tiro = 0
+    if pygame.key.get_pressed()[K_LEFT] and var_tiro >= 8:
+        bala.add(Bala(x - 1, y + 17, 'esquerda'))
+        var_tiro = 0
+    if pygame.key.get_pressed()[K_RIGHT] and var_tiro >= 8:
+        bala.add(Bala(x + 25, y + 17, 'direita'))
+        var_tiro = 0
     rect = pygame.draw.rect(tela,(200, 100, 0), (x2, y2, 20, 20))
     for sprite in todas_as_sprites:
         for enemies in inimigos:
             if sprite.rect.colliderect(enemies):
-                inimigos.remove(enemies)
-                points += 1
+                print('DERROTA')
+                exit()
     for enemies in inimigos:
         if enemies.rect.colliderect(rect):
             print('game over!')
@@ -174,6 +249,7 @@ while True:
     inimigos.draw(tela)
     for enemy in inimigos:
         enemy.movimento()
+    bala.draw(tela)
     if y > 720:
         y = 0
     if y < 0:
@@ -186,6 +262,7 @@ while True:
     if space == False:
         tela.blit(texto_inicial, (500, 240))
     inimigos.update()
+    bala.update()
     todas_as_sprites.draw(tela)
     todas_as_sprites.update()
     pygame.display.update()

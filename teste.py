@@ -103,18 +103,6 @@ class Bala(pygame.sprite.Sprite):
         self.y = y
         self.movimento = z
         self.rect.topleft = x, y
-    def bala_cima(self):
-        self.y -= 5
-        self.rect.topleft = self.x, self.y
-    def bala_baixo(self):
-        self.y += 5
-        self.rect.topleft = self.x, self.y
-    def bala_esquerda(self):
-        self.x -= 5
-        self.rect.topleft = self.x, self.y
-    def bala_direita(self):
-        self.x += 5
-        self.rect.topleft = self.x, self.y
     def movimentobala(self):
         if self.movimento == 'cima':
             self.y -= 5
@@ -128,13 +116,7 @@ class Bala(pygame.sprite.Sprite):
         if self.movimento == 'direita':
             self.x += 5
             self.rect.topleft = self.x, self.y
-
-
-
-        
-
 todas_as_sprites = pygame.sprite.Group()
-
 player = Player(x , y)
 todas_as_sprites.add(player)
 inimigos = pygame.sprite.Group()
@@ -153,7 +135,7 @@ while True:
     text = fonte.render(mensage, False, (0, 0, 0))
     tela.blit(mapa, (0,0))
     var_inimigo = randint(0, 100)
-    rect = pygame.draw.rect(tela,(200, 100, 0), (x2, y2, 20, 20))
+    rect = pygame.draw.rect(tela,(255, 0, 0), (x2, y2, 20, 20))
     for tiro in bala:
         tiro.movimentobala()
     for sprite in todas_as_sprites:
@@ -175,7 +157,6 @@ while True:
     for tiro in bala:
         if tiro.rect.colliderect(rect):
             bala.remove(tiro)
-    
     if 15 < var_inimigo < 20:
         inimigos.add(Enemies(spawn[1], spawn[0]))
     for event in pygame.event.get():
@@ -233,7 +214,7 @@ while True:
     if pygame.key.get_pressed()[K_RIGHT] and var_tiro >= 8:
         bala.add(Bala(x + 25, y + 17, 'direita'))
         var_tiro = 0
-    rect = pygame.draw.rect(tela,(200, 100, 0), (x2, y2, 20, 20))
+    rect = pygame.draw.rect(tela,(250, 0, 0), (x2, y2, 20, 20))
     for sprite in todas_as_sprites:
         for enemies in inimigos:
             if sprite.rect.colliderect(enemies):
@@ -243,7 +224,7 @@ while True:
         if enemies.rect.colliderect(rect):
             print('game over!')
             exit()
-    if points == 50:
+    if points >= 50:
         print('parabens caraio')
         exit()
     inimigos.draw(tela)

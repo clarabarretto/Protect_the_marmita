@@ -250,7 +250,8 @@ while True:
     if x > 1080:
         x = 0
     if x < 0:
-        x = 1080   
+        x = 1080 
+        
     tela.blit(text, (980, 10))
     if space == False:
         tela.blit(texto_inicial, (500, 240))

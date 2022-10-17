@@ -91,6 +91,7 @@ class Enemies(pygame.sprite.Sprite):
         elif 374 <= self.y <= 445 and self.x > 520:
             self.x -= 2
         self.rect.topleft = self.x, self.y
+        
 class Bala(pygame.sprite.Sprite):
     def __init__(self, x, y, z):
         pygame.sprite.Sprite.__init__(self)
@@ -116,12 +117,14 @@ class Bala(pygame.sprite.Sprite):
         if self.movimento == 'direita':
             self.x += 5
             self.rect.topleft = self.x, self.y
+            
 todas_as_sprites = pygame.sprite.Group()
 player = Player(x , y)
 todas_as_sprites.add(player)
 inimigos = pygame.sprite.Group()
 bala = pygame.sprite.Group()
 var_tiro = 7
+
 while True:
     var_direita = True
     var_esquerda = True
@@ -136,8 +139,10 @@ while True:
     tela.blit(mapa, (0,0))
     var_inimigo = randint(0, 100)
     rect = pygame.draw.rect(tela,(255, 0, 0), (x2, y2, 20, 20))
+    
     for tiro in bala:
         tiro.movimentobala()
+        
     for sprite in todas_as_sprites:
         if sprite.rect.colliderect(rect):
             if x + 25 == x2:
@@ -148,17 +153,20 @@ while True:
                 var_baixo = False
             if y2 + 10 <= y and y <= y2 + 37:
                 var_cima = False
+                
     for tiro in bala:
         for enemies in inimigos:
             if tiro.rect.colliderect(enemies):
                 bala.remove(tiro)
                 inimigos.remove(enemies)
                 points += 1
+                
     for tiro in bala:
         if tiro.rect.colliderect(rect):
             bala.remove(tiro)
     if 15 < var_inimigo < 20:
         inimigos.add(Enemies(spawn[1], spawn[0]))
+        
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
@@ -190,6 +198,7 @@ while True:
             if event.key == K_RIGHT and var_tiro >= 8:
                 bala.add(Bala(x + 25, y + 17, 'direita'))
                 var_tiro = 0
+                
     if pygame.key.get_pressed()[K_a] and x != 0 and var_esquerda == True:
         x -= 5
         player.esquerda(x, y)
@@ -215,15 +224,18 @@ while True:
         bala.add(Bala(x + 25, y + 17, 'direita'))
         var_tiro = 0
     rect = pygame.draw.rect(tela,(250, 0, 0), (x2, y2, 20, 20))
+    
     for sprite in todas_as_sprites:
         for enemies in inimigos:
             if sprite.rect.colliderect(enemies):
                 print('DERROTA')
                 exit()
+                
     for enemies in inimigos:
         if enemies.rect.colliderect(rect):
             print('game over!')
             exit()
+            
     if points >= 50:
         print('parabens caraio')
         exit()
@@ -242,6 +254,7 @@ while True:
     tela.blit(text, (980, 10))
     if space == False:
         tela.blit(texto_inicial, (500, 240))
+        
     inimigos.update()
     bala.update()
     todas_as_sprites.draw(tela)

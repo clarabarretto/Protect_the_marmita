@@ -130,15 +130,15 @@ def main():
                     points += 1
 
         if desenho_vida:
-        if len(lista_drop_vida) >= 1:
-            for c in lista_drop_vida:
-                coracao_rect = coracao.get_rect(topleft = (c[0], c[1]))
-                for sprite in todas_as_sprites:
-                    if sprite.rect.colliderect(coracao_rect):
-                        pegar_vida = True
-                        lista_passagem_vida.append(c)
-    for c in lista_drop_vida:
-        tela.blit(coracao, (c[0], c[1]))
+            if len(lista_drop_vida) >= 1:
+                for c in lista_drop_vida:
+                    coracao_rect = coracao.get_rect(topleft = (c[0], c[1]))
+                    for sprite in todas_as_sprites:
+                        if sprite.rect.colliderect(coracao_rect):
+                            pegar_vida = True
+                            lista_passagem_vida.append(c)
+        for c in lista_drop_vida:
+            tela.blit(coracao, (c[0], c[1]))
 
 
         for tiro in bala:

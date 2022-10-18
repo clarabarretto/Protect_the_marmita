@@ -39,3 +39,10 @@ class Enemies(pygame.sprite.Sprite):
         elif 374 <= self.y <= 445 and self.x > 520:
             self.x -= 2
         self.rect.topleft = self.x, self.y
+
+    
+    def coord_x(self):
+        return self.x
+    
+    def coord_y(self):
+        return self.y

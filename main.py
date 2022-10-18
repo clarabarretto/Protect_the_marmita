@@ -6,6 +6,7 @@ from sys import exit
 from random import randint
 from random import choice
 import personagem as perso
+import pupvida
 
 pygame.init()
 
@@ -34,6 +35,9 @@ todas_as_sprites.add(player)
 inimigos = pygame.sprite.Group()
 bala = pygame.sprite.Group()
 var_tiro = 7
+desenho = False
+lista_drop_vida = list()
+listatempvida = list()
 
 while True:
     var_direita = True
@@ -69,7 +73,21 @@ while True:
             if tiro.rect.colliderect(enemies):
                 bala.remove(tiro)
                 inimigos.remove(enemies)
+                x_inimigo = enemies.coord_x()
+                y_inimigo = enemies.coord_y()
+                drop = pupvida.dropar(x_inimigo, y_inimigo)
+                if drop[2]:
+                    desenho = True
+                    listatempvida.append(x_inimigo)
+                    listatempvida.append(y_inimigo)
+                    copia = listatempvida[:]
+                    lista_drop_vida.append(copia)
+                    listatempvida.clear()
+
                 points += 1
+    if desenho:
+        for c in lista_drop_vida:
+            pygame.draw.rect(tela, (200, 0, 0), (c[0], c[1], 20, 20))
 
     for tiro in bala:
         if tiro.rect.colliderect(rect):

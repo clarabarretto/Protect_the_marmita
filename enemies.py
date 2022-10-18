@@ -22,21 +22,21 @@ class Enemies(pygame.sprite.Sprite):
             self.y -= 2
         elif self.x == 1080:
             self.x -= 2
-        elif self.x == 520 and self.y < 350:
+        elif self.x == 560 and self.y < 350:
             self.y += 2
-        elif self.x == 520 and self.y > 350:
+        elif self.x == 560 and self.y > 350:
             self.y -= 2
-        elif self.y == 350 and self.x > 520:
+        elif self.y == 360 and self.x > 520:
             self.x -= 2
-        elif self.y == 350 and self.x < 520:
+        elif self.y == 360 and self.x < 520:
             self.x += 2
-        elif 500 < self.x < 580 and self.y < 350:
+        elif 470 <= self.x <= 580 and self.y < 350:
             self.y += 2
-        elif 500 < self.x < 580 and self.y > 350:
+        elif 470 <= self.x <= 580 and self.y > 350:
             self.y -= 2
-        elif 374 <= self.y <= 445 and self.x < 520:
+        elif 320 <= self.y <= 445 and self.x < 520:
             self.x += 2
-        elif 374 <= self.y <= 445 and self.x > 520:
+        elif 320 <= self.y <= 445 and self.x > 520:
             self.x -= 2
         self.rect.topleft = self.x, self.y
 

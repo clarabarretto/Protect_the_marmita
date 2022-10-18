@@ -137,8 +137,8 @@ while True:
             if event.key == K_s and y != 685 and var_baixo == True:
                 y += 5
                 player.baixo(x, y)
-            #if event.key == K_SPACE:
-                #space = True
+            #if event.key == K_SPACE:                  #Comentei essa parte pq coloquei la embaixo a opção pra pegar o item como 'space' ai quando apertava tava
+                 #space = True                         #apagando o nome 'assacinato', que eu acho q n vai ficar escrito no mapa msm                   
             if event.key == K_UP and event.key == K_RIGHT and var_tiro >= 8:
                 bala.add(pr.Bala(x + 25, y, 'nordeste'))
                 var_tiro = 0
@@ -256,7 +256,7 @@ while True:
     tela.blit(textv, (3, 28))
 
     #if space == False:
-        #tela.blit(texto_inicial, (500, 240))
+        #tela.blit(texto_inicial, (500, 240))      #esse era o if que apagava o nome 'assacinato'
         
     inimigos.update()
     bala.update()

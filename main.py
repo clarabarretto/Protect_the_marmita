@@ -6,9 +6,11 @@ from sys import exit
 from random import randint
 from random import choice
 import personagem as perso
+import pupvida
 
 pygame.init()
 
+#olhar linha 141 e 259
 coordenadas_y = [408, 374, 442, 0, 720]
 coordenadas_x = [504, 528, 552, 576, 0, 1080]
 coordenadas = [(0, 504), (0, 528), (0, 552), (0, 576), (720, 504), (720, 528), (720, 552), (720, 576), (408, 0), (408, 1080), (374, 0), (374, 1080), (442, 0), (442, 1080)]
@@ -25,6 +27,8 @@ x = 300
 y = 580
 x2 = 520
 y2 = 350
+xbv = 0
+ybv = 0
 var_inimigo = 0
 relogio = pygame.time.Clock()
 mapa = pygame.image.load('sprites/mapamundi.png')
@@ -34,6 +38,13 @@ todas_as_sprites.add(player)
 inimigos = pygame.sprite.Group()
 bala = pygame.sprite.Group()
 var_tiro = 7
+desenho_vida = False
+pegar_vida = False
+lista_drop_vida = list()
+listatempvida = list()
+lista_barra_vida = [[5, 5], [73, 5], [141, 5], [209, 5], [277, 5]]
+coordenadas_vida = ([5, 5], [73, 5], [141, 5], [209, 5], [277, 5])
+lista_passagem_vida =[]
 
 while True:
     var_direita = True
@@ -49,6 +60,16 @@ while True:
     tela.blit(mapa, (0,0))
     var_inimigo = randint(0, 100)
     rect = pygame.draw.rect(tela,(255, 0, 0), (x2, y2, 20, 20))
+
+    #desenhando bara de vida:
+    pygame.draw.rect(tela, (128, 128, 128), (xbv, ybv, 350, 30)) #barra cinza do fundo
+    pygame.draw.rect(tela, (128, 128, 128), (xbv, ybv + 30, 50, 20)) #barra cinza c nome vida
+    mensagev = f"Vida"
+    textv = fonte.render(mensagev, False, (0, 0, 0))
+
+    for c in lista_barra_vida:
+        pygame.draw.rect(tela, (255, 0, 0), (c[0], c[1], 68, 20)) #desenhar cada barrinha vermelha
+    #
 
     for tiro in bala:
         tiro.movimentobala()
@@ -69,7 +90,28 @@ while True:
             if tiro.rect.colliderect(enemies):
                 bala.remove(tiro)
                 inimigos.remove(enemies)
+                x_inimigo = enemies.coord_x()
+                y_inimigo = enemies.coord_y()
+                drop = pupvida.dropar(x_inimigo, y_inimigo)
+                #condição pra dropar o 'coração de vida'
+                if drop[2]:
+                    desenho_vida = True
+                    listatempvida.append(x_inimigo)
+                    listatempvida.append(y_inimigo)
+                    copia = listatempvida[:]
+                    lista_drop_vida.append(copia)
+                    listatempvida.clear()
                 points += 1
+
+    if desenho_vida:
+        if len(lista_drop_vida) >= 1:
+            for c in lista_drop_vida:
+                coracao = pygame.draw.rect(tela, (200, 0, 0), (c[0], c[1], 20, 20))
+                for sprite in todas_as_sprites:
+                    if sprite.rect.colliderect(coracao):
+                        pegar_vida = True
+                        lista_passagem_vida.append(c)
+
 
     for tiro in bala:
         if tiro.rect.colliderect(rect):
@@ -96,8 +138,8 @@ while True:
             if event.key == K_s and y != 685 and var_baixo == True:
                 y += 5
                 player.baixo(x, y)
-            if event.key == K_SPACE:
-                space = True
+            #if event.key == K_SPACE:                  #Comentei essa parte pq coloquei la embaixo a opção pra pegar o item como 'space' ai quando apertava tava
+                 #space = True                         #apagando o nome 'assacinato', que eu acho q n vai ficar escrito no mapa msm                   
             if event.key == K_UP and event.key == K_RIGHT and var_tiro >= 8:
                 bala.add(pr.Bala(x + 25, y, 'nordeste'))
                 var_tiro = 0
@@ -125,6 +167,15 @@ while True:
             if event.key == K_RIGHT and var_tiro >= 8:
                 bala.add(pr.Bala(x + 25, y + 17, 'direita'))
                 var_tiro = 0
+            if event.key == K_SPACE:
+                if pegar_vida:
+                    if len(lista_barra_vida) < 5:
+                        qtd = len(lista_barra_vida)
+                        lista_barra_vida.append(coordenadas_vida[qtd])
+                        indice_coord = lista_passagem_vida[-1]
+                        indice_apagar_vida = lista_drop_vida.index(indice_coord)
+                        del lista_drop_vida[indice_apagar_vida]
+
 
     if pygame.key.get_pressed()[K_a] and x != 0 and var_esquerda == True:
         x -= 5
@@ -168,8 +219,14 @@ while True:
     for sprite in todas_as_sprites:
         for enemies in inimigos:
             if sprite.rect.colliderect(enemies):
-                print('DERROTA')
-                exit()
+                #quando encostar no player perde 1 barra de vida
+                if len(lista_barra_vida) > 1:
+                    inimigos.remove(enemies)
+                    quantidade = len(lista_barra_vida) - 1
+                    del lista_barra_vida[quantidade]
+                else:
+                    print('DERROTA')
+                    exit()
 
     for enemies in inimigos:
         if enemies.rect.colliderect(rect):
@@ -197,9 +254,10 @@ while True:
         x = 1080
 
     tela.blit(text, (980, 10))
+    tela.blit(textv, (3, 28))
 
-    if space == False:
-        tela.blit(texto_inicial, (500, 240))
+    #if space == False:
+        #tela.blit(texto_inicial, (500, 240))      #esse era o if que apagava o nome 'assacinato'
         
     inimigos.update()
     bala.update()

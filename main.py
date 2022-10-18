@@ -53,6 +53,7 @@ def main():
     var_inimigo = 0
     relogio = pygame.time.Clock()
     mapa = pygame.image.load('sprites/mapamundi.png')
+    coracao = pygame.image.load('sprites/heart_pixel_art_16x16_20x20.png').convert_alpha()#
     todas_as_sprites = pygame.sprite.Group()
     sprite_almoco = pygame.sprite.Group()
     almoco = Almoco()
@@ -129,13 +130,15 @@ def main():
                     points += 1
 
         if desenho_vida:
-            if len(lista_drop_vida) >= 1:
-                for c in lista_drop_vida:
-                    coracao = pygame.draw.rect(tela, (200, 0, 0), (c[0], c[1], 20, 20))
-                    for sprite in todas_as_sprites:
-                        if sprite.rect.colliderect(coracao):
-                            pegar_vida = True
-                            lista_passagem_vida.append(c)
+        if len(lista_drop_vida) >= 1:
+            for c in lista_drop_vida:
+                coracao_rect = coracao.get_rect(topleft = (c[0], c[1]))
+                for sprite in todas_as_sprites:
+                    if sprite.rect.colliderect(coracao_rect):
+                        pegar_vida = True
+                        lista_passagem_vida.append(c)
+    for c in lista_drop_vida:
+        tela.blit(coracao, (c[0], c[1]))
 
 
         for tiro in bala:

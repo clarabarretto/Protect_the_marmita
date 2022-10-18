@@ -11,7 +11,15 @@ import pupvida
 pygame.init()
 
 #olhar linha 141 e 259
-
+class Almoco(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.sprites = []
+        self.sprites.append(pygame.image.load('sprites/spaghetti_03 - Copia.png'))
+        self.atual = 0
+        self.image = self.sprites[self.atual]
+        self.rect = self.image.get_rect()
+        self.rect.topleft = 520, 360
 
 def pause():
     while True:
@@ -25,7 +33,7 @@ def pause():
 def main():
     coordenadas_y = [408, 374, 442, 0, 720]
     coordenadas_x = [504, 528, 552, 576, 0, 1080]
-    coordenadas = [(0, 504), (0, 528), (0, 552), (0, 576), (720, 504), (720, 528), (720, 552), (720, 576), (408, 0), (408, 1080), (374, 0), (374, 1080), (442, 0), (442, 1080)]
+    coordenadas = [(0, 520), (0, 480), (0, 560), (720, 520), (720, 480), (720, 560), (320, 0), (320, 1080), (360, 0), (360, 1080), (400, 0), (400, 1080)]
     space = False
     var_pause = False
     larg = 1080
@@ -36,16 +44,19 @@ def main():
     tela = pygame.display.set_mode((larg, alt))
     texto_inicial = fonte.render('AssaCInato!', False, (0,0,0))
     pygame.display.set_caption('AssaCInato')
-    x = 300
-    y = 580
+    x = 520
+    y = 320
     x2 = 520
-    y2 = 350
+    y2 = 360
     xbv = 0
     ybv = 0
     var_inimigo = 0
     relogio = pygame.time.Clock()
     mapa = pygame.image.load('sprites/mapamundi.png')
     todas_as_sprites = pygame.sprite.Group()
+    sprite_almoco = pygame.sprite.Group()
+    almoco = Almoco()
+    sprite_almoco.add(almoco)
     player = perso.Player(x, y)
     todas_as_sprites.add(player)
     inimigos = pygame.sprite.Group()
@@ -61,7 +72,6 @@ def main():
     lista_barra_vida = [[5, 5], [73, 5], [141, 5], [209, 5], [277, 5]]
     coordenadas_vida = ([5, 5], [73, 5], [141, 5], [209, 5], [277, 5])
     lista_passagem_vida =[]
-    
     while True:
         if var_pause == True:
             pause()
@@ -75,9 +85,8 @@ def main():
         tela.fill((0,0,0))
         tela.blit(mapa, (0,0))
         var_inimigo = randint(0, 100)
-        rect = pygame.draw.rect(tela,(255, 0, 0), (x2, y2, 20, 20))
 
-        #desenhando barra de vida:
+        #desenhando bara de vida:
         pygame.draw.rect(tela, (128, 128, 128), (xbv, ybv, 350, 30)) #barra cinza do fundo
         pygame.draw.rect(tela, (128, 128, 128), (xbv, ybv + 30, 50, 20)) #barra cinza c nome vida
         mensagev = f"Vida"
@@ -91,7 +100,7 @@ def main():
             tiro.movimentobala()
 
         for sprite in todas_as_sprites:
-            if sprite.rect.colliderect(rect):
+            if sprite.rect.colliderect(almoco):
                 if x + 25 == x2:
                     var_direita = False
                 if (x2 + 15) <= x and x <= (x2 + 35):
@@ -130,7 +139,7 @@ def main():
 
 
         for tiro in bala:
-            if tiro.rect.colliderect(rect):
+            if tiro.rect.colliderect(almoco):
                 bala.remove(tiro)
 
         if 15 < var_inimigo < 20:
@@ -230,8 +239,6 @@ def main():
             bala.add(pr.Bala(x + 25, y + 17, 'direita'))
             var_tiro = 0
 
-        rect = pygame.draw.rect(tela,(250, 250, 0), (x2, y2, 20, 20))
-
         for sprite in todas_as_sprites:
             for enemies in inimigos:
                 if sprite.rect.colliderect(enemies):
@@ -245,7 +252,7 @@ def main():
                         var_pause = True
 
         for enemies in inimigos:
-            if enemies.rect.colliderect(rect):
+            if enemies.rect.colliderect(almoco):
                 tela.blit(texto_perdeu, (200, 300))
                 var_pause = True
 
@@ -278,6 +285,7 @@ def main():
         
         inimigos.update()
         bala.update()
+        sprite_almoco.draw(tela)
         todas_as_sprites.draw(tela)
         todas_as_sprites.update()
         pygame.display.update()

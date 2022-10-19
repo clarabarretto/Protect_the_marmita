@@ -54,7 +54,7 @@ def main():
     relogio = pygame.time.Clock()
     mapa = pygame.image.load('sprites/mapamundi.png')
     coracao = pygame.image.load('sprites/heart_pixel_art_16x16_20x20.png').convert_alpha()#
-    bota = pygame.image.load('sprites/botas1.png')
+    bota = pygame.image.load('sprites/botas1.png').convert_alpha()#
     todas_as_sprites = pygame.sprite.Group()
     sprite_almoco = pygame.sprite.Group()
     almoco = Almoco()
@@ -67,6 +67,7 @@ def main():
 
     speed = False
     pegar_bota = False
+    efeito_velocidade = False
     lista_speed = list()
     listatempspeed = list()
 
@@ -80,7 +81,6 @@ def main():
     lista_barra_vida = [[5, 5], [73, 5], [141, 5], [209, 5], [277, 5]]
     coordenadas_vida = ([5, 5], [73, 5], [141, 5], [209, 5], [277, 5])
     lista_passagem_vida = []
-    lista_passagem_speed = [] 
 
     while True:
         if var_pause == True:
@@ -127,8 +127,11 @@ def main():
                     inimigos.remove(enemies)
                     x_inimigo = enemies.coord_x()
                     y_inimigo = enemies.coord_y()
+                    drop = drops.dropar_vida(x_inimigo, y_inimigo)
+                    print(f'{drop}, d1')
+                    drop2 = drops.dropar_bota(x_inimigo, y_inimigo)
+                    print(f'{drop2}, d2')
 
-                    drop = drops.dropar(x_inimigo, y_inimigo)
                     #condição pra dropar o 'coração de vida'
                     if drop[2]:
                         desenho_vida = True
@@ -139,6 +142,27 @@ def main():
                         listatempvida.clear()
                     points += 1
 
+                    #condição pra dropar a 'bota'
+                    if drop2[2] and speed == False:
+                        speed = True
+                        listatempspeed.append(x_inimigo)
+                        listatempspeed.append(y_inimigo)
+                        copia2 = listatempspeed[:]
+                        lista_speed.append(copia2)
+                        listatempspeed.clear()
+
+        if speed:
+            if len(lista_speed) >= 1:
+                for c in lista_speed:
+                    bota_rect = bota.get_rect(topleft = (c[0], c[1]))
+                for sprite in todas_as_sprites:
+                    if sprite.rect.colliderect(bota_rect):
+                        pegar_bota = True
+                        del lista_speed[0]
+
+        for c in lista_speed:
+            tela.blit(bota, (c[0], c[1]))
+                            
         if desenho_vida:
             if len(lista_drop_vida) >= 1:
                 for c in lista_drop_vida:
@@ -166,22 +190,22 @@ def main():
             if event.type == KEYDOWN:
                 if event.key == K_a and x != 0 and var_esquerda == True:
                     x -= 5
-                    if speed == True:
+                    if pegar_bota == True:
                         x -= 5
                     player.esquerda(x, y)
                 if event.key == K_d and x != 1055 and var_direita == True:
                     x += 5
-                    if speed == True:
+                    if pegar_bota == True:
                         x += 5
                     player.direita(x, y)
                 if event.key == K_w and y != 0 and var_cima == True:
                     y -= 5
-                    if speed == True:
+                    if pegar_bota == True:
                         y -= 5
                     player.cima(x, y)
                 if event.key == K_s and y != 685 and var_baixo == True:
                     y += 5
-                    if speed == True:
+                    if pegar_bota == True:
                         y += 5
                     player.baixo(x, y)
                 #if event.key == K_SPACE:                  #Comentei essa parte pq coloquei la embaixo a opção pra pegar o item como 'space' ai quando apertava tava
@@ -225,22 +249,22 @@ def main():
 
         if pygame.key.get_pressed()[K_a] and x != 0 and var_esquerda == True:
             x -= 5
-            if speed == True:
+            if pegar_bota == True:
                 x -= 5
             player.esquerda(x, y)
         if pygame.key.get_pressed()[K_d] and x != 1055 and var_direita == True:
             x += 5
-            if speed == True:
+            if pegar_bota == True:
                 x += 5
             player.direita(x, y)
         if pygame.key.get_pressed()[K_w] and y != 0 and var_cima == True:
             y -= 5
-            if speed == True:
+            if pegar_bota == True:
                 y -= 5
             player.cima(x, y)
         if pygame.key.get_pressed()[K_s] and y != 685 and var_baixo == True:
             y += 5
-            if speed == True:
+            if pegar_bota == True:
                 y += 5
             player.baixo(x, y)
         if pygame.key.get_pressed()[K_RIGHT] and pygame.key.get_pressed()[K_UP] and var_tiro >= 8:

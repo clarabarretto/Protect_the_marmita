@@ -6,7 +6,7 @@ class Enemies(pygame.sprite.Sprite):
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
         self.sprites = []
-        self.sprites.append(pygame.image.load('sprites/goblin.png'))
+        self.sprites.append(pygame.image.load('sprites/monster1.png'))
         self.atual = 0
         self.image = self.sprites[self.atual]
         self.rect = self.image.get_rect()

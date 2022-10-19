@@ -70,7 +70,7 @@ def main():
     lista_speed = list()
     listatempspeed = list()
 
-    desenho_vida = False
+    desenho_drops = False
     pegar_vida = False
     lista_drop_vida = list()
     listatempvida = list()
@@ -131,7 +131,7 @@ def main():
                     drop = drops.dropar(x_inimigo, y_inimigo)
                     #condição pra dropar o 'coração de vida'
                     if drop[2]:
-                        desenho_vida = True
+                        desenho_drops = True
                         listatempvida.append(x_inimigo)
                         listatempvida.append(y_inimigo)
                         copia = listatempvida[:]
@@ -139,7 +139,7 @@ def main():
                         listatempvida.clear()
                     points += 1
 
-        if desenho_vida:
+        if desenho_drops:
             if len(lista_drop_vida) >= 1:
                 for c in lista_drop_vida:
                     coracao_rect = coracao.get_rect(topleft = (c[0], c[1]))

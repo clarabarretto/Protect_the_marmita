@@ -31,4 +31,3 @@ class map(pygame.sprite.Sprite):
         for i in range(len(self.maps['mapa 1'])):
             for j in range(27):
                 self.window.blit(self.img_mapa[self.map[i][j]]['sprite'], (40*j, 40*i)) 
-

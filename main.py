@@ -2,15 +2,28 @@ import pygame
 import enemies as en
 import projetil as pr
 from pygame.locals import *
-from sys import exit 
+from sys import exit
 from random import randint
 from random import choice
 import personagem as perso
 import drops
+import mapa as mp
 
 pygame.init()
 
-#olhar linha 141 e 259
+# olhar linha 141 e 259
+larg = 1080
+alt = 720
+fonte = pygame.font.SysFont('arial', 20, True, True)
+fonte_inicial = pygame.font.SysFont('arial', 3000, True, False)
+fonte2 = pygame.font.SysFont('arial', 120, True, False)
+tela = pygame.display.set_mode((larg, alt))
+texto_inicial = fonte.render('AssaCInato!', False, (0, 0, 0))
+pygame.display.set_caption('AssaCInato')
+menu_image = pygame.image.load('sprites/menu.png')
+iniciar = False
+
+
 class Almoco(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
@@ -21,6 +34,7 @@ class Almoco(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.topleft = 520, 360
 
+
 def pause():
     while True:
         for event in pygame.event.get():
@@ -30,20 +44,52 @@ def pause():
             if event.type == KEYDOWN:
                 if event.key == K_r:
                     main()
+
+
+def cria_Botao(msg, x, y, larg, alt, hover, cor):
+    mouse = pygame.mouse.get_pos()
+
+    click = pygame.mouse.get_pressed(3)
+
+    if(x + larg > mouse[0] and y + alt > mouse[1] > y):
+        pygame.draw.rect(tela, hover, (int(x), int(y), int(larg), int(alt)))
+        if(click[0] == 1):
+            iniciar = True
+            print(iniciar)
+            main()
+
+    else:
+        pygame.draw.rect(tela, cor, (x, y, larg, alt))
+
+    texto_botao = (fonte.render(msg, True, (255, 0, 0)))
+    tela.blit(texto_botao, ((540), int(y)))
+
+
+def menu():
+    titulo = fonte2.render("NOME DO JOGO", True, (255, 0, 0))
+
+    while True:
+        tela.blit(menu_image, (0, 0))
+        cria_Botao("JOGAR", (larg / 2), (alt / 2),
+                   150, 150, (15, 15, 15), (0, 0, 0))
+        tela.blit(titulo, (65, 0))
+
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                exit()
+
+        pygame.display.update()
+
+
 def main():
     coordenadas_y = [408, 374, 442, 0, 720]
     coordenadas_x = [504, 528, 552, 576, 0, 1080]
-    coordenadas = [(0, 520), (0, 480), (0, 560), (720, 520), (720, 480), (720, 560), (320, 0), (320, 1080), (360, 0), (360, 1080), (400, 0), (400, 1080)]
+    coordenadas = [(0, 520), (0, 480), (0, 560), (720, 520), (720, 480), (720, 560),
+                   (320, 0), (320, 1080), (360, 0), (360, 1080), (400, 0), (400, 1080)]
     space = False
     var_pause = False
-    larg = 1080
-    alt = 720
     points = 0
-    fonte = pygame.font.SysFont('arial', 20, True, True)
-    fonte_inicial = pygame.font.SysFont('arial', 3000, True, False)
-    tela = pygame.display.set_mode((larg, alt))
-    texto_inicial = fonte.render('AssaCInato!', False, (0,0,0))
-    pygame.display.set_caption('AssaCInato')
     x = 520
     y = 320
     x2 = 520
@@ -53,7 +99,8 @@ def main():
     var_inimigo = 0
     relogio = pygame.time.Clock()
     mapa = pygame.image.load('sprites/mapamundi.png')
-    coracao = pygame.image.load('sprites/heart_pixel_art_16x16_20x20.png').convert_alpha()#
+    coracao = pygame.image.load(
+        'sprites/heart_pixel_art_16x16_20x20.png').convert_alpha()
     bota = pygame.image.load('sprites/botas1.png')
     todas_as_sprites = pygame.sprite.Group()
     sprite_almoco = pygame.sprite.Group()
@@ -64,6 +111,7 @@ def main():
     inimigos = pygame.sprite.Group()
     bala = pygame.sprite.Group()
     var_tiro = 7
+    mapa = mp.map(tela)
 
     speed = False
     pegar_bota = False
@@ -74,17 +122,16 @@ def main():
     pegar_vida = False
     lista_drop_vida = list()
     listatempvida = list()
-    fonte2 = pygame.font.SysFont('arial', 120, True, False)
     texto_perdeu = fonte2.render('YOU LOSE!', False, (255, 0, 0))
     texto_ganhou = fonte2.render("YOU WIN!", False, (0, 255, 0))
     lista_barra_vida = [[5, 5], [73, 5], [141, 5], [209, 5], [277, 5]]
     coordenadas_vida = ([5, 5], [73, 5], [141, 5], [209, 5], [277, 5])
     lista_passagem_vida = []
-    lista_passagem_speed = [] 
+    lista_passagem_speed = []
 
     while True:
         if var_pause == True:
-            pause()
+          pause()
         var_direita = True
         var_esquerda = True
         var_cima = True
@@ -92,18 +139,22 @@ def main():
         var_tiro += 1
         spawn = choice(coordenadas)
         relogio.tick(30)
-        tela.fill((0,0,0))
-        tela.blit(mapa, (0,0))
+        tela.fill((0, 0, 0))
+        # tela.blit(mapa, (0, 0))
+        mapa.draw_mapa()
         var_inimigo = randint(0, 100)
 
-        #desenhando bara de vida:
-        pygame.draw.rect(tela, (128, 128, 128), (xbv, ybv, 350, 30)) #barra cinza do fundo
-        pygame.draw.rect(tela, (128, 128, 128), (xbv, ybv + 30, 50, 20)) #barra cinza c nome vida
+        # desenhando bara de vida:
+        # barra cinza do fundo
+        pygame.draw.rect(tela, (128, 128, 128), (xbv, ybv, 350, 30))
+        # barra cinza c nome vida
+        pygame.draw.rect(tela, (128, 128, 128), (xbv, ybv + 30, 50, 20))
         mensagev = f"Vida"
         textv = fonte.render(mensagev, False, (0, 0, 0))
 
         for c in lista_barra_vida:
-            pygame.draw.rect(tela, (255, 0, 0), (c[0], c[1], 68, 20)) #desenhar cada barrinha vermelha
+            # desenhar cada barrinha vermelha
+            pygame.draw.rect(tela, (255, 0, 0), (c[0], c[1], 68, 20))
     #
 
         for tiro in bala:
@@ -129,7 +180,7 @@ def main():
                     y_inimigo = enemies.coord_y()
 
                     drop = drops.dropar(x_inimigo, y_inimigo)
-                    #condição pra dropar o 'coração de vida'
+                    # condição pra dropar o 'coração de vida'
                     if drop[2]:
                         desenho_drops = True
                         listatempvida.append(x_inimigo)
@@ -142,7 +193,7 @@ def main():
         if desenho_drops:
             if len(lista_drop_vida) >= 1:
                 for c in lista_drop_vida:
-                    coracao_rect = coracao.get_rect(topleft = (c[0], c[1]))
+                    coracao_rect = coracao.get_rect(topleft=(c[0], c[1]))
                     for sprite in todas_as_sprites:
                         if sprite.rect.colliderect(coracao_rect):
                             pegar_vida = True
@@ -184,8 +235,8 @@ def main():
                     if speed == True:
                         y += 5
                     player.baixo(x, y)
-                #if event.key == K_SPACE:                  #Comentei essa parte pq coloquei la embaixo a opção pra pegar o item como 'space' ai quando apertava tava
-                    #space = True                        #apagando o nome 'assacinato', que eu acho q n vai ficar escrito no mapa msm                   
+                # if event.key == K_SPACE:                  #Comentei essa parte pq coloquei la embaixo a opção pra pegar o item como 'space' ai quando apertava tava
+                    # space = True                        #apagando o nome 'assacinato', que eu acho q n vai ficar escrito no mapa msm
                 if event.key == K_UP and event.key == K_RIGHT and var_tiro >= 8:
                     bala.add(pr.Bala(x + 25, y, 'nordeste'))
                     var_tiro = 0
@@ -196,7 +247,7 @@ def main():
                     bala.add(pr.Bala(x + 25, y + 24, 'sudeste'))
                     var_tiro = 0
                 if event.key == K_DOWN and event.key == K_LEFT and var_tiro >= 8:
-                    bala.add(pr.Bala(x , y + 24, 'sudoeste'))
+                    bala.add(pr.Bala(x, y + 24, 'sudoeste'))
                     var_tiro = 0
                 if event.key == K_UP and event.key == K_RIGHT and var_tiro >= 8:
                     bala.add(pr.Bala(x + 25, y + 1, 'nordeste'))
@@ -219,9 +270,9 @@ def main():
                             qtd = len(lista_barra_vida)
                             lista_barra_vida.append(coordenadas_vida[qtd])
                             indice_coord = lista_passagem_vida[-1]
-                            indice_apagar_vida = lista_drop_vida.index(indice_coord)
+                            indice_apagar_vida = lista_drop_vida.index(
+                                indice_coord)
                             del lista_drop_vida[indice_apagar_vida]
-
 
         if pygame.key.get_pressed()[K_a] and x != 0 and var_esquerda == True:
             x -= 5
@@ -253,7 +304,7 @@ def main():
             bala.add(pr.Bala(x + 25, y + 24, 'sudeste'))
             var_tiro = 0
         if pygame.key.get_pressed()[K_LEFT] and pygame.key.get_pressed()[K_DOWN] and var_tiro >= 8:
-            bala.add(pr.Bala(x , y + 24, 'sudoeste'))
+            bala.add(pr.Bala(x, y + 24, 'sudoeste'))
             var_tiro = 0
         if pygame.key.get_pressed()[K_UP] and var_tiro >= 8:
             bala.add(pr.Bala(x + 12, y - 1, 'cima'))
@@ -271,7 +322,7 @@ def main():
         for sprite in todas_as_sprites:
             for enemies in inimigos:
                 if sprite.rect.colliderect(enemies):
-                    #quando encostar no player perde 1 barra de vida
+                    # quando encostar no player perde 1 barra de vida
                     if len(lista_barra_vida) > 1:
                         inimigos.remove(enemies)
                         quantidade = len(lista_barra_vida) - 1
@@ -309,13 +360,16 @@ def main():
         mensage = f"score : {points}"
         text = fonte.render(mensage, False, (0, 0, 0))
         tela.blit(text, (980, 10))
-        #if space == False:
-            #tela.blit(texto_inicial, (500, 240))      #esse era o if que apagava o nome 'assacinato'
-        
+        # if space == False:
+        # tela.blit(texto_inicial, (500, 240))      #esse era o if que apagava o nome 'assacinato'
+
         inimigos.update()
         bala.update()
         sprite_almoco.draw(tela)
         todas_as_sprites.draw(tela)
         todas_as_sprites.update()
         pygame.display.update()
-main()
+
+
+# main()
+menu()

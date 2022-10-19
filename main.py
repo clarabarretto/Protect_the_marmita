@@ -140,7 +140,6 @@ def main():
         spawn = choice(coordenadas)
         relogio.tick(30)
         tela.fill((0, 0, 0))
-        # tela.blit(mapa, (0, 0))
         mapa.draw_mapa()
         var_inimigo = randint(0, 100)
 

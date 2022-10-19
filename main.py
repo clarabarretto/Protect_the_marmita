@@ -21,8 +21,6 @@ tela = pygame.display.set_mode((larg, alt))
 texto_inicial = fonte.render('AssaCInato!', False, (0, 0, 0))
 pygame.display.set_caption('AssaCInato')
 menu_image = pygame.image.load('sprites/menu.png')
-iniciar = False
-
 
 class Almoco(pygame.sprite.Sprite):
     def __init__(self):
@@ -54,8 +52,6 @@ def cria_Botao(msg, x, y, larg, alt, hover, cor):
     if(x + larg > mouse[0] and y + alt > mouse[1] > y):
         pygame.draw.rect(tela, hover, (int(x), int(y), int(larg), int(alt)))
         if(click[0] == 1):
-            iniciar = True
-            print(iniciar)
             main()
 
     else:
@@ -121,7 +117,7 @@ def main():
     lista_speed = list()
     listatempspeed = list()
 
-    desenho_drops = False
+    desenho_vida = False
     pegar_vida = False
     lista_drop_vida = list()
     listatempvida = list()
@@ -180,14 +176,12 @@ def main():
                     x_inimigo = enemies.coord_x()
                     y_inimigo = enemies.coord_y()
                     drop = drops.dropar_vida(x_inimigo, y_inimigo)
-                    print(f'{drop}, d1')
                     drop2 = drops.dropar_bota(x_inimigo, y_inimigo)
-                    print(f'{drop2}, d2')
 
 
                     #condição pra dropar o 'coração de vida'
                     if drop[2]:
-                        desenho_drops = True
+                        desenho_vida = True
                         listatempvida.append(x_inimigo)
                         listatempvida.append(y_inimigo)
                         copia = listatempvida[:]

@@ -6,7 +6,7 @@ from sys import exit
 from random import randint
 from random import choice
 import personagem as perso
-import pupvida
+import drops
 
 pygame.init()
 
@@ -15,7 +15,7 @@ class Almoco(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         self.sprites = []
-        self.sprites.append(pygame.image.load('sprites/spaghetti_03 - Copia.png'))
+        self.sprites.append(pygame.image.load('sprites/geladeira.png'))
         self.atual = 0
         self.image = self.sprites[self.atual]
         self.rect = self.image.get_rect()
@@ -54,6 +54,7 @@ def main():
     relogio = pygame.time.Clock()
     mapa = pygame.image.load('sprites/mapamundi.png')
     coracao = pygame.image.load('sprites/heart_pixel_art_16x16_20x20.png').convert_alpha()#
+    bota = pygame.image.load('sprites/botas1.png')
     todas_as_sprites = pygame.sprite.Group()
     sprite_almoco = pygame.sprite.Group()
     almoco = Almoco()
@@ -63,6 +64,12 @@ def main():
     inimigos = pygame.sprite.Group()
     bala = pygame.sprite.Group()
     var_tiro = 7
+
+    speed = False
+    pegar_bota = False
+    lista_speed = list()
+    listatempspeed = list()
+
     desenho_vida = False
     pegar_vida = False
     lista_drop_vida = list()
@@ -72,7 +79,9 @@ def main():
     texto_ganhou = fonte2.render("YOU WIN!", False, (0, 255, 0))
     lista_barra_vida = [[5, 5], [73, 5], [141, 5], [209, 5], [277, 5]]
     coordenadas_vida = ([5, 5], [73, 5], [141, 5], [209, 5], [277, 5])
-    lista_passagem_vida =[]
+    lista_passagem_vida = []
+    lista_passagem_speed = [] 
+
     while True:
         if var_pause == True:
             pause()
@@ -118,7 +127,8 @@ def main():
                     inimigos.remove(enemies)
                     x_inimigo = enemies.coord_x()
                     y_inimigo = enemies.coord_y()
-                    drop = pupvida.dropar(x_inimigo, y_inimigo)
+
+                    drop = drops.dropar(x_inimigo, y_inimigo)
                     #condição pra dropar o 'coração de vida'
                     if drop[2]:
                         desenho_vida = True
@@ -137,9 +147,9 @@ def main():
                         if sprite.rect.colliderect(coracao_rect):
                             pegar_vida = True
                             lista_passagem_vida.append(c)
+
         for c in lista_drop_vida:
             tela.blit(coracao, (c[0], c[1]))
-
 
         for tiro in bala:
             if tiro.rect.colliderect(almoco):
@@ -156,15 +166,23 @@ def main():
             if event.type == KEYDOWN:
                 if event.key == K_a and x != 0 and var_esquerda == True:
                     x -= 5
+                    if speed == True:
+                        x -= 5
                     player.esquerda(x, y)
                 if event.key == K_d and x != 1055 and var_direita == True:
                     x += 5
+                    if speed == True:
+                        x += 5
                     player.direita(x, y)
                 if event.key == K_w and y != 0 and var_cima == True:
                     y -= 5
+                    if speed == True:
+                        y -= 5
                     player.cima(x, y)
                 if event.key == K_s and y != 685 and var_baixo == True:
                     y += 5
+                    if speed == True:
+                        y += 5
                     player.baixo(x, y)
                 #if event.key == K_SPACE:                  #Comentei essa parte pq coloquei la embaixo a opção pra pegar o item como 'space' ai quando apertava tava
                     #space = True                        #apagando o nome 'assacinato', que eu acho q n vai ficar escrito no mapa msm                   
@@ -207,15 +225,23 @@ def main():
 
         if pygame.key.get_pressed()[K_a] and x != 0 and var_esquerda == True:
             x -= 5
+            if speed == True:
+                x -= 5
             player.esquerda(x, y)
         if pygame.key.get_pressed()[K_d] and x != 1055 and var_direita == True:
             x += 5
+            if speed == True:
+                x += 5
             player.direita(x, y)
         if pygame.key.get_pressed()[K_w] and y != 0 and var_cima == True:
             y -= 5
+            if speed == True:
+                y -= 5
             player.cima(x, y)
         if pygame.key.get_pressed()[K_s] and y != 685 and var_baixo == True:
             y += 5
+            if speed == True:
+                y += 5
             player.baixo(x, y)
         if pygame.key.get_pressed()[K_RIGHT] and pygame.key.get_pressed()[K_UP] and var_tiro >= 8:
             bala.add(pr.Bala(x + 25, y + 1, 'nordeste'))

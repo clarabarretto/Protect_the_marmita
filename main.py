@@ -7,6 +7,7 @@ from random import randint
 from random import choice
 import personagem as perso
 import drops
+import mapa as mp
 
 pygame.init()
 
@@ -52,7 +53,6 @@ def main():
     ybv = 0
     var_inimigo = 0
     relogio = pygame.time.Clock()
-    mapa = pygame.image.load('sprites/mapamundi.png')
     coracao = pygame.image.load('sprites/heart_pixel_art_16x16_20x20.png').convert_alpha()#
     bota = pygame.image.load('sprites/botas1.png')
     todas_as_sprites = pygame.sprite.Group()
@@ -64,6 +64,7 @@ def main():
     inimigos = pygame.sprite.Group()
     bala = pygame.sprite.Group()
     var_tiro = 7
+    mapa = mp.map(tela)
 
     speed = False
     pegar_bota = False
@@ -93,7 +94,7 @@ def main():
         spawn = choice(coordenadas)
         relogio.tick(30)
         tela.fill((0,0,0))
-        tela.blit(mapa, (0,0))
+        mapa.draw_mapa()
         var_inimigo = randint(0, 100)
 
         #desenhando bara de vida:
@@ -277,16 +278,16 @@ def main():
                         quantidade = len(lista_barra_vida) - 1
                         del lista_barra_vida[quantidade]
                     else:
-                        tela.blit(texto_perdeu, (200, 300))
+                        tela.blit(texto_perdeu, (250, 300))
                         var_pause = True
 
         for enemies in inimigos:
             if enemies.rect.colliderect(almoco):
-                tela.blit(texto_perdeu, (200, 300))
+                tela.blit(texto_perdeu, (250, 300))
                 var_pause = True
 
         if points >= 50:
-            tela.blit(texto_ganhou, (200, 300))
+            tela.blit(texto_ganhou, (250, 300))
             var_pause = True
 
         inimigos.draw(tela)
@@ -307,7 +308,7 @@ def main():
 
         tela.blit(textv, (3, 28))
         mensage = f"score : {points}"
-        text = fonte.render(mensage, False, (0, 0, 0))
+        text = fonte.render(mensage, False, (255, 255, 255))
         tela.blit(text, (980, 10))
         #if space == False:
             #tela.blit(texto_inicial, (500, 240))      #esse era o if que apagava o nome 'assacinato'

@@ -382,7 +382,7 @@ def main():
         inimigos.draw(tela)
 
         for enemy in inimigos:
-            enemy.movimento()
+            enemy.movimento(x, y)
 
         bala.draw(tela)
 

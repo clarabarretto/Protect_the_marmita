@@ -95,6 +95,7 @@ def main():
     var_inimigo = 0
     relogio = pygame.time.Clock()
     var_tempo = 0
+    qntd_inimigos = 0
 
     mapa = pygame.image.load('sprites/mapamundi.png')
 

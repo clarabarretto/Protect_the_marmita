@@ -370,10 +370,12 @@ def main():
 
         for enemies in inimigos:
             if enemies.rect.colliderect(almoco):
-                vida_alomoco -= 1
+                vida_almoco -= 1
                 points += 1
-                tela.blit(texto_perdeu, (250, 300))
-                var_pause = True
+                inimigos.remove(enemies)
+                if vida_almoco == 0:
+                    tela.blit(texto_perdeu, (250, 300))
+                    var_pause = True
 
         if points >= 200:
             tela.blit(texto_ganhou, (250, 300))

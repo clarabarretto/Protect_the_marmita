@@ -227,7 +227,7 @@ def main():
             if tiro.rect.colliderect(almoco):
                 bala.remove(tiro)
 
-        if qntd_inimigos <= 199:
+        if qntd_inimigos <= 149:
             if 19 <= var_inimigo <= 20 and var_tempo <= 100:
                 inimigos.add(en.Enemies(spawn[1], spawn[0]))
                 qntd_inimigos += 1
@@ -377,7 +377,7 @@ def main():
                     tela.blit(texto_perdeu, (250, 300))
                     var_pause = True
 
-        if points >= 200:
+        if points >= 150:
             tela.blit(texto_ganhou, (250, 300))
             var_pause = True
 

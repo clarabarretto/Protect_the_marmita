@@ -94,6 +94,7 @@ def main():
     ybv = 0
     var_inimigo = 0
     relogio = pygame.time.Clock()
+    var_tempo = 0
 
     mapa = pygame.image.load('sprites/mapamundi.png')
 
@@ -113,6 +114,7 @@ def main():
     inimigos = pygame.sprite.Group()
     bala = pygame.sprite.Group()
     var_tiro = 7
+    vida_almoco = 5
     mapa = mp.map(tela)
 
     speed = False
@@ -134,6 +136,7 @@ def main():
     while True:
         if var_pause == True:
             pause()
+        var_tempo += 1
         var_direita = True
         var_esquerda = True
         var_cima = True
@@ -223,8 +226,19 @@ def main():
             if tiro.rect.colliderect(almoco):
                 bala.remove(tiro)
 
-        if 15 < var_inimigo < 20:
-            inimigos.add(en.Enemies(spawn[1], spawn[0]))
+        if qntd_inimigos <= 199:
+            if 19 <= var_inimigo <= 20 and var_tempo <= 100:
+                inimigos.add(en.Enemies(spawn[1], spawn[0]))
+                qntd_inimigos += 1
+            elif 18 <= var_inimigo <= 20 and 100 < var_tempo <= 500:
+                inimigos.add(en.Enemies(spawn[1], spawn[0]))
+                qntd_inimigos += 1
+            elif 16 <= var_inimigo <= 20 and 500 < var_tempo <= 2000:
+                inimigos.add(en.Enemies(spawn[1], spawn[0]))
+                qntd_inimigos += 1
+            elif 14 <= var_inimigo <= 20 and var_tempo > 2000:
+                inimigos.add(en.Enemies(spawn[1], spawn[0]))
+                qntd_inimigos += 1
 
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -339,6 +353,7 @@ def main():
             for enemies in inimigos:
                 if sprite.rect.colliderect(enemies):
                     # quando encostar no player perde 1 barra de vida
+                    points += 1
                     if len(lista_barra_vida) > 1:
                         inimigos.remove(enemies)
                         quantidade = len(lista_barra_vida) - 1
@@ -354,10 +369,12 @@ def main():
 
         for enemies in inimigos:
             if enemies.rect.colliderect(almoco):
+                vida_alomoco -= 1
+                points += 1
                 tela.blit(texto_perdeu, (250, 300))
                 var_pause = True
 
-        if points >= 50:
+        if points >= 200:
             tela.blit(texto_ganhou, (250, 300))
             var_pause = True
 

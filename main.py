@@ -1,4 +1,5 @@
 import pygame
+from obstaculo import Obstaculos
 import enemies as en
 import projetil as pr
 from pygame.locals import *
@@ -117,6 +118,7 @@ def main():
     var_tiro = 7
     vida_almoco = 5
     mapa = mp.map(tela)
+    obstaculos = mapa.check_obstaculos()
 
     speed = False
     pegar_bota = False
@@ -144,6 +146,7 @@ def main():
         var_baixo = True
         var_tiro += 1
         spawn = choice(coordenadas)
+        obstaculos.draw(tela)
         relogio.tick(30)
         tela.fill((0,0,0))
         mapa.draw_mapa()
@@ -168,7 +171,19 @@ def main():
                     var_baixo = False
                 if y2 + 10 <= y and y <= y2 + 37:
                     var_cima = False
-
+        
+        for sprite in todas_as_sprites:
+            for obs in obstaculos:
+                if sprite.rect.colliderect(obs):
+                    if x + 25 == obs.coord_x():
+                        var_direita = False
+                    if (obs.coord_x() + 15) <= x and x <= (obs.coord_x() + 35):
+                        var_esquerda = False
+                    if obs.coord_y() - 45 <= y and y <= obs.coord_y() - 27:
+                        var_baixo = False
+                    if obs.coord_y() + 10 <= y and y <= obs.coord_y() + 37:
+                        var_cima = False
+        
         for tiro in bala:
             for enemies in inimigos:
                 if tiro.rect.colliderect(enemies):
@@ -248,24 +263,24 @@ def main():
 
             if event.type == KEYDOWN:
                 if event.key == K_a and x != 0 and var_esquerda == True:
-                    x -= 5
+                    x -= 6
                     if pegar_bota == True:
-                        x -= 5
+                        x -= 2
                     player.esquerda(x, y)
                 if event.key == K_d and x != 1055 and var_direita == True:
-                    x += 5
+                    x += 6
                     if pegar_bota == True:
-                        x += 5
+                        x += 2
                     player.direita(x, y)
                 if event.key == K_w and y != 0 and var_cima == True:
-                    y -= 5
+                    y -= 6
                     if pegar_bota == True:
-                        y -= 5
+                        y -= 2
                     player.cima(x, y)
                 if event.key == K_s and y != 685 and var_baixo == True:
-                    y += 5
+                    y += 6
                     if pegar_bota == True:
-                        y += 5
+                        y += 2
                     player.baixo(x, y)
                 if event.key == K_UP and event.key == K_RIGHT and var_tiro >= 8:
                     bala.add(pr.Bala(x + 25, y, 'nordeste'))
@@ -306,24 +321,24 @@ def main():
                             pegar_vida = False
 
         if pygame.key.get_pressed()[K_a] and x != 0 and var_esquerda == True:
-            x -= 5
+            x -= 6
             if pegar_bota == True:
-                x -= 5
+                x -= 2
             player.esquerda(x, y)
         if pygame.key.get_pressed()[K_d] and x != 1055 and var_direita == True:
-            x += 5
+            x += 6
             if pegar_bota == True:
-                x += 5
+                x += 2
             player.direita(x, y)
         if pygame.key.get_pressed()[K_w] and y != 0 and var_cima == True:
-            y -= 5
+            y -= 6
             if pegar_bota == True:
-                y -= 5
+                y -= 2
             player.cima(x, y)
         if pygame.key.get_pressed()[K_s] and y != 685 and var_baixo == True:
-            y += 5
+            y += 6
             if pegar_bota == True:
-                y += 5
+                y += 2
             player.baixo(x, y)
         if pygame.key.get_pressed()[K_RIGHT] and pygame.key.get_pressed()[K_UP] and var_tiro >= 8:
             bala.add(pr.Bala(x + 25, y + 1, 'nordeste'))
@@ -407,8 +422,10 @@ def main():
         bala.update()
         sprite_almoco.draw(tela)
         todas_as_sprites.draw(tela)
+        obstaculos.update()
         todas_as_sprites.update()
         pygame.display.update()
      
 # main()
 menu()
+    

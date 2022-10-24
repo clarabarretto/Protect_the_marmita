@@ -5,7 +5,7 @@ from random import randint
 
 
 def dropar_vida(x, y):
-    chance = randint(1, 10)
+    chance = randint(1, 100)
 
     lista_coordenadas_vida = [x, y]
 
@@ -18,7 +18,7 @@ def dropar_vida(x, y):
     return lista_coordenadas_vida
     
 def dropar_bota(x, y):
-    chance = randint(1, 10)
+    chance = randint(1, 100)
 
     lista_coordenadas_bota = [x, y]
 

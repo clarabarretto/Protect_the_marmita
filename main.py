@@ -1,5 +1,4 @@
 import pygame
-from obstaculo import Obstaculos
 import enemies as en
 import projetil as pr
 from pygame.locals import *
@@ -21,7 +20,7 @@ fonte2 = pygame.font.SysFont('arial', 120, True, False)
 tela = pygame.display.set_mode((larg, alt))
 texto_inicial = fonte.render('AssaCInato!', False, (0, 0, 0))
 pygame.display.set_caption('AssaCInato')
-menu_image = pygame.image.load('sprites/menu.png')
+menu_image = pygame.image.load('sprites/menu.jpg')
 
 class Almoco(pygame.sprite.Sprite):
     def __init__(self):
@@ -50,26 +49,24 @@ def cria_Botao(msg, x, y, larg, alt, hover, cor):
 
     click = pygame.mouse.get_pressed(3)
 
-    if(x + larg > mouse[0] and y + alt > mouse[1] > y):
-        pygame.draw.rect(tela, hover, (int(x), int(y), int(larg), int(alt)))
+    if(x - 70 + larg > mouse[0] and y - 80 + alt > mouse[1] > y - 80):
+        pygame.draw.rect(tela, hover, (int(x - 70), int(y - 80), int(larg), int(alt)))
         if(click[0] == 1):
             main()
 
     else:
-        pygame.draw.rect(tela, cor, (x, y, larg, alt))
+        pygame.draw.rect(tela, cor, (x - 70, y -80 , larg, alt))
 
     texto_botao = (fonte.render(msg, True, (255, 0, 0)))
-    tela.blit(texto_botao, ((540), int(y)))
+    tela.blit(texto_botao, ((510), int(y - 50)))
 
 
 def menu():
-    titulo = fonte2.render("NOME DO JOGO", True, (255, 0, 0))
 
     while True:
         tela.blit(menu_image, (0, 0))
-        cria_Botao("JOGAR", (larg / 2), (alt / 2),
-                   150, 150, (15, 15, 15), (0, 0, 0))
-        tela.blit(titulo, (65, 0))
+        cria_Botao("JOGAR", ((larg / 2)), ((alt / 2)),
+                   150, 80, (15, 15, 15), (0, 0, 0))
 
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -130,8 +127,8 @@ def main():
     pegar_vida = False
     lista_drop_vida = list()
     listatempvida = list()
-    texto_perdeu = fonte2.render('YOU LOSE!', False, (255, 0, 0))
-    texto_ganhou = fonte2.render("YOU WIN!", False, (0, 255, 0))
+    texto_perdeu = fonte2.render('FOI DE F!', False, (255, 0, 0))
+    texto_ganhou = fonte2.render("GEYDSON!", False, (0, 255, 0))
     lista_barra_vida = [[5, 5], [58, 5], [111, 5], [164, 5], [217, 5]]
     coordenadas_vida = ([5, 5], [58, 5], [111, 5], [164, 5], [217, 5])
     lista_passagem_vida = []

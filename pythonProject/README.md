@@ -1,1 +1,0 @@
-# pythonProject grupo 10

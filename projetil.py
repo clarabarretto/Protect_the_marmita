@@ -6,7 +6,7 @@ class Bala(pygame.sprite.Sprite):
     def __init__(self, x, y, z):
         pygame.sprite.Sprite.__init__(self)
         self.sprites = []
-        self.sprites.append(pygame.image.load('sprites/New Piskel.png'))
+        self.sprites.append(pygame.image.load('sprites/balapreta.png'))
         self.atual = 0
         self.image = self.sprites[self.atual]
         self.rect = self.image.get_rect()

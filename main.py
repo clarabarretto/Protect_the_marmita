@@ -114,6 +114,7 @@ def main():
     bala = pygame.sprite.Group()
     var_tiro = 7
     vida_almoco = 5
+    var_parado = 0
     mapa = mp.map(tela)
     obstaculos = mapa.check_obstaculos()
 
@@ -137,11 +138,14 @@ def main():
         if var_pause == True:
             pause()
         var_tempo += 1
+        var_parado += 1
         var_direita = True
         var_esquerda = True
         var_cima = True
         var_baixo = True
         var_tiro += 1
+        if var_tiro >= 8:     
+            var_sprite_tiro = None
         spawn = choice(coordenadas)
         obstaculos.draw(tela)
         relogio.tick(30)
@@ -160,25 +164,89 @@ def main():
 
         for sprite in todas_as_sprites:
             if sprite.rect.colliderect(almoco):
-                if x + 25 == x2:
+                if x == x2 - 32:
                     var_direita = False
-                if (x2 + 15) <= x and x <= (x2 + 35):
+                if x == x2 + 32:
                     var_esquerda = False
-                if y2 - 45 <= y and y <= y2 - 27:
+                if y == y2 - 32:
                     var_baixo = False
-                if y2 + 10 <= y and y <= y2 + 37:
+                if y == y2 + 32:
+                    var_cima = False
+                if x == x2 - 34:
+                    var_direita = False
+                if x == x2 + 34:
+                    var_esquerda = False
+                if y == y2 - 34:
+                    var_baixo = False
+                if y == y2 + 34:
+                    var_cima = False
+                if x == x2 - 36:
+                    var_direita = False
+                if x == x2 + 36:
+                    var_esquerda = False
+                if y == y2 - 36:
+                    var_baixo = False
+                if y == y2 + 36:
+                    var_cima = False
+                if x == x2 - 38:
+                    var_direita = False
+                if x == x2 + 38:
+                    var_esquerda = False
+                if y == y2 - 38:
+                    var_baixo = False
+                if y == y2 + 38:
+                    var_cima = False
+                if x == x2 - 40:
+                    var_direita = False
+                if x == x2 + 40:
+                    var_esquerda = False
+                if y == y2 - 40:
+                    var_baixo = False
+                if y == y2 + 40:
                     var_cima = False
         
         for sprite in todas_as_sprites:
             for obs in obstaculos:
                 if sprite.rect.colliderect(obs):
-                    if x + 25 == obs.coord_x():
+                    if x == obs.coord_x() - 32:
                         var_direita = False
-                    if (obs.coord_x() + 15) <= x and x <= (obs.coord_x() + 35):
+                    if x == obs.coord_x() + 32:
                         var_esquerda = False
-                    if obs.coord_y() - 45 <= y and y <= obs.coord_y() - 27:
+                    if y == obs.coord_y() - 32:
                         var_baixo = False
-                    if obs.coord_y() + 10 <= y and y <= obs.coord_y() + 37:
+                    if y == obs.coord_y() + 32:
+                        var_cima = False
+                    if x == obs.coord_x() - 34:
+                        var_direita = False
+                    if x == obs.coord_x() + 34:
+                        var_esquerda = False
+                    if y == obs.coord_y() - 34:
+                        var_baixo = False
+                    if y == obs.coord_y() + 34:
+                        var_cima = False
+                    if x == obs.coord_x() - 36:
+                        var_direita = False
+                    if x == obs.coord_x() + 36:
+                        var_esquerda = False
+                    if y == obs.coord_y() - 36:
+                        var_baixo = False
+                    if y == obs.coord_y() + 36:
+                        var_cima = False
+                    if x == obs.coord_x() - 38:
+                        var_direita = False
+                    if x == obs.coord_x() + 38:
+                        var_esquerda = False
+                    if y == obs.coord_y() - 38:
+                        var_baixo = False
+                    if y == obs.coord_y() + 38:
+                        var_cima = False
+                    if x == obs.coord_x() - 40:
+                        var_direita = False
+                    if x == obs.coord_x() + 40:
+                        var_esquerda = False
+                    if y == obs.coord_y() - 40:
+                        var_baixo = False
+                    if y == obs.coord_y() + 40:
                         var_cima = False
         
         for tiro in bala:
@@ -190,8 +258,6 @@ def main():
                     y_inimigo = enemies.coord_y()
                     drop = drops.dropar_vida(x_inimigo, y_inimigo)
                     drop2 = drops.dropar_bota(x_inimigo, y_inimigo)
-
-
                     #condição pra dropar o 'coração de vida'
                     if drop[2]:
                         desenho_vida = True
@@ -210,6 +276,12 @@ def main():
                         lista_speed.append(copia2)
                         listatempspeed.clear()
                     points += 1
+    
+        for tiro in bala:
+            if tiro.coordenadas()[0] > 1080 or tiro.coordenadas()[0] < 0:
+                bala.remove(tiro)
+            if tiro.coordenadas()[1] > 720 or tiro.coordenadas()[1] < 0:
+                bala.remove(tiro)
 
         if speed:
             if len(lista_speed) >= 1:
@@ -259,53 +331,100 @@ def main():
                 exit()
 
             if event.type == KEYDOWN:
-                if event.key == K_a and x != 0 and var_esquerda == True:
-                    x -= 6
-                    if pegar_bota == True:
-                        x -= 2
-                    player.esquerda(x, y)
-                if event.key == K_d and x != 1055 and var_direita == True:
-                    x += 6
-                    if pegar_bota == True:
-                        x += 2
-                    player.direita(x, y)
-                if event.key == K_w and y != 0 and var_cima == True:
-                    y -= 6
-                    if pegar_bota == True:
-                        y -= 2
-                    player.cima(x, y)
-                if event.key == K_s and y != 685 and var_baixo == True:
-                    y += 6
-                    if pegar_bota == True:
-                        y += 2
-                    player.baixo(x, y)
                 if event.key == K_UP and event.key == K_RIGHT and var_tiro >= 8:
                     bala.add(pr.Bala(x + 25, y, 'nordeste'))
+                    player.tiro_cima(x, y)
+                    var_sprite_tiro = 'cima'
+                    var_parado = 0
                     var_tiro = 0
                 if event.key == K_UP and event.key == K_LEFT and var_tiro >= 8:
                     bala.add(pr.Bala(x, y, 'noroeste'))
+                    player.tiro_cima(x, y)
+                    var_sprite_tiro = 'cima'
+                    var_parado = 0
                     var_tiro = 0
                 if event.key == K_DOWN and event.key == K_RIGHT and var_tiro >= 8:
                     bala.add(pr.Bala(x + 25, y + 24, 'sudeste'))
+                    player.tiro_baixo(x, y)
+                    var_sprite_tiro = 'baixo'
+                    var_parado = 0
                     var_tiro = 0
                 if event.key == K_DOWN and event.key == K_LEFT and var_tiro >= 8:
                     bala.add(pr.Bala(x, y + 24, 'sudoeste'))
+                    player.tiro_baixo(x, y)
+                    var_sprite_tiro = 'baixo'
+                    var_parado = 0
                     var_tiro = 0
                 if event.key == K_UP and event.key == K_RIGHT and var_tiro >= 8:
                     bala.add(pr.Bala(x + 25, y + 1, 'nordeste'))
+                    player.tiro_cima(x, y)
+                    var_sprite_tiro = 'baixo'
+                    var_parado = 0
                     var_tiro = 0
                 if event.key == K_UP and var_tiro >= 8:
                     bala.add(pr.Bala(x + 12, y - 1, 'cima'))
+                    player.tiro_cima(x, y)
+                    var_sprite_tiro = 'cima'
+                    var_parado = 0
                     var_tiro = 0
                 if event.key == K_DOWN and var_tiro >= 8:
                     bala.add(pr.Bala(x + 12, y + 25, 'baixo'))
+                    player.tiro_baixo(x, y)
+                    var_sprite_tiro = 'baixo'
+                    var_parado = 0
                     var_tiro = 0
                 if event.key == K_LEFT and var_tiro >= 8:
                     bala.add(pr.Bala(x - 1, y + 17, 'esquerda'))
+                    player.tiro_esquerda(x, y)
+                    var_sprite_tiro = 'esquerda'
+                    var_parado = 0
                     var_tiro = 0
                 if event.key == K_RIGHT and var_tiro >= 8:
                     bala.add(pr.Bala(x + 25, y + 17, 'direita'))
+                    player.tiro_direita(x, y)
+                    var_sprite_tiro = 'direita'
+                    var_parado = 0
                     var_tiro = 0
+                if event.key == K_a and x != 0 and var_esquerda == True:
+                    if pegar_bota == False:
+                        x -= 4
+                    var_parado = 0
+                    if pegar_bota == True:
+                        x -= 8
+                    if var_sprite_tiro is None:
+                        player.esquerda(x, y)
+                    else:
+                        player.movimento_tiro(x, y, var_sprite_tiro)
+                if event.key == K_d and x != 1055 and var_direita == True:
+                    if pegar_bota == False:
+                        x += 4
+                    var_parado = 0
+                    if pegar_bota == True:
+                        x += 8
+                    if var_sprite_tiro is None:
+                        player.direita(x, y)
+                    else:
+                        player.movimento_tiro(x, y, var_sprite_tiro)
+                if event.key == K_w and y != 0 and var_cima == True:
+                    if pegar_bota == False:
+                        y -= 4
+                    var_parado = 0
+                    if pegar_bota == True:
+                        y -= 8
+                    if var_sprite_tiro is None:
+                        player.cima(x, y)
+                    else:
+                        player.movimento_tiro(x, y, var_sprite_tiro)
+                if event.key == K_s and y != 685 and var_baixo == True:
+                    if pegar_bota == False:
+                        y += 4
+                    var_parado = 0
+                    if pegar_bota == True:
+                        y += 8
+                    if var_sprite_tiro is None:
+                        player.baixo(x, y)
+                    else:
+                        player.movimento_tiro(x, y, var_sprite_tiro)
                 if event.key == K_SPACE:
                     if pegar_vida:
                         if len(lista_barra_vida) < 5:
@@ -317,50 +436,96 @@ def main():
                             del lista_drop_vida[indice_apagar_vida]
                             pegar_vida = False
 
-        if pygame.key.get_pressed()[K_a] and x != 0 and var_esquerda == True:
-            x -= 6
-            if pegar_bota == True:
-                x -= 2
-            player.esquerda(x, y)
-        if pygame.key.get_pressed()[K_d] and x != 1055 and var_direita == True:
-            x += 6
-            if pegar_bota == True:
-                x += 2
-            player.direita(x, y)
-        if pygame.key.get_pressed()[K_w] and y != 0 and var_cima == True:
-            y -= 6
-            if pegar_bota == True:
-                y -= 2
-            player.cima(x, y)
-        if pygame.key.get_pressed()[K_s] and y != 685 and var_baixo == True:
-            y += 6
-            if pegar_bota == True:
-                y += 2
-            player.baixo(x, y)
         if pygame.key.get_pressed()[K_RIGHT] and pygame.key.get_pressed()[K_UP] and var_tiro >= 8:
             bala.add(pr.Bala(x + 25, y + 1, 'nordeste'))
+            player.tiro_cima(x, y)
+            var_sprite_tiro = 'cima'
+            var_parado = 0
             var_tiro = 0
         if pygame.key.get_pressed()[K_LEFT] and pygame.key.get_pressed()[K_UP] and var_tiro >= 8:
             bala.add(pr.Bala(x, y, 'noroeste'))
+            player.tiro_cima(x, y)
+            var_sprite_tiro = 'cima'
+            var_parado = 0
             var_tiro = 0
         if pygame.key.get_pressed()[K_RIGHT] and pygame.key.get_pressed()[K_DOWN] and var_tiro >= 8:
             bala.add(pr.Bala(x + 25, y + 24, 'sudeste'))
+            player.tiro_baixo(x, y)
+            var_sprite_tiro = 'baixo'
+            var_parado = 0
             var_tiro = 0
         if pygame.key.get_pressed()[K_LEFT] and pygame.key.get_pressed()[K_DOWN] and var_tiro >= 8:
             bala.add(pr.Bala(x, y + 24, 'sudoeste'))
+            player.tiro_baixo(x, y)
+            var_sprite_tiro = 'baixo'
+            var_parado = 0
             var_tiro = 0
         if pygame.key.get_pressed()[K_UP] and var_tiro >= 8:
             bala.add(pr.Bala(x + 12, y - 1, 'cima'))
+            player.tiro_cima(x, y)
+            var_sprite_tiro = 'cima'
+            var_parado = 0
             var_tiro = 0
         if pygame.key.get_pressed()[K_DOWN] and var_tiro >= 8:
             bala.add(pr.Bala(x + 12, y + 25, 'baixo'))
+            player.tiro_baixo(x, y)
+            var_sprite_tiro = 'baixo'
+            var_parado = 0
             var_tiro = 0
         if pygame.key.get_pressed()[K_LEFT] and var_tiro >= 8:
             bala.add(pr.Bala(x - 1, y + 17, 'esquerda'))
+            player.tiro_esquerda(x, y)
+            var_sprite_tiro = 'esquerda'
+            var_parado = 0
             var_tiro = 0
         if pygame.key.get_pressed()[K_RIGHT] and var_tiro >= 8:
             bala.add(pr.Bala(x + 25, y + 17, 'direita'))
+            player.tiro_direita(x, y)
+            var_sprite_tiro = 'direita'
+            var_parado = 0
             var_tiro = 0
+        if pygame.key.get_pressed()[K_a] and x != 0 and var_esquerda == True:
+            if pegar_bota == False:
+                x -= 4
+            var_parado = 0
+            if pegar_bota == True:
+                x -= 8
+            if var_sprite_tiro is None:
+                player.esquerda(x, y)
+            else:
+                player.movimento_tiro(x, y, var_sprite_tiro)
+        if pygame.key.get_pressed()[K_d] and x != 1055 and var_direita == True:
+            if pegar_bota == False:
+                x += 4
+            var_parado = 0
+            if pegar_bota == True:
+                x += 8
+            if var_sprite_tiro is None:
+                player.direita(x, y)
+            else:
+                player.movimento_tiro(x, y, var_sprite_tiro)
+        if pygame.key.get_pressed()[K_w] and y != 0 and var_cima == True:
+            if pegar_bota == False:
+                y -= 4
+            var_parado = 0
+            if pegar_bota == True:
+                y -= 8
+            if var_sprite_tiro is None:
+                player.cima(x, y)
+            else:
+                player.movimento_tiro(x, y, var_sprite_tiro)
+        if pygame.key.get_pressed()[K_s] and y != 685 and var_baixo == True:
+            if pegar_bota == False:
+                y += 4
+            var_parado = 0
+            if pegar_bota == True:
+                y += 8
+            if var_sprite_tiro is None:
+                player.baixo(x, y)
+            else:
+                player.movimento_tiro(x, y, var_sprite_tiro)
+        if var_parado >= 8:
+            player.parado(x, y)
 
         for sprite in todas_as_sprites:
             for enemies in inimigos:
@@ -396,18 +561,9 @@ def main():
         inimigos.draw(tela)
 
         for enemy in inimigos:
-            enemy.movimento(x, y)
+            enemy.movimento(x, y, x2, y2)
 
         bala.draw(tela)
-
-        if y > 720:
-            y = 0
-        if y < 0:
-            y = 720
-        if x > 1080:
-            x = 0
-        if x < 0:
-            x = 1080
 
         mensage = f"score : {points}"
         text = fonte.render(mensage, False, (255, 255, 255))
@@ -425,4 +581,3 @@ def main():
      
 # main()
 menu()
-    

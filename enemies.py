@@ -19,7 +19,7 @@ class Enemies(pygame.sprite.Sprite):
         self.x = x
         self.y = y
         self.rect.topleft = self.x, self.y
-    def movimento(self, x, y):
+    def movimento(self, x, y, x2, y2):
         if self.y == 0:
             self.y += 2
         elif self.x == 0:
@@ -29,30 +29,43 @@ class Enemies(pygame.sprite.Sprite):
         elif self.x == 1080:
             self.x -= 2
         elif self.escolha == 'geladeira':
-            if self.x == 560 and self.y < 350:
+            if self.x == x2 and self.y < y2:
                 self.y += 2
-            elif self.x == 560 and self.y > 350:
+            elif self.x == x2 and self.y > y2:
                 self.y -= 2
-            elif self.y == 360 and self.x > 520:
+            elif self.y == y2 and self.x > x2:
                 self.x -= 2
-            elif self.y == 360 and self.x < 520:
+            elif self.y == y2 and self.x < x2:
                 self.x += 2
-            elif 470 <= self.x <= 580 and self.y < 350:
+            elif x2 - 80 <= self.x <= x2 + 80 and self.y < y2:
                 self.y += 2
-            elif 470 <= self.x <= 580 and self.y > 350:
+            elif x2 - 80 <= self.x <= x2 + 80 and self.y > y2:
                 self.y -= 2
-            elif 320 <= self.y <= 445 and self.x < 520:
+            elif y2 - 80 <= self.y <= y2 + 80 and self.x < x2:
                 self.x += 2
-            elif 320 <= self.y <= 445 and self.x > 520:
+            elif y2 - 80 <= self.y <= y2 + 80 and self.x > x2:
                 self.x -= 2
+            else:
+                if self.x < x2 and self.y > y2:
+                    self.x += 2
+                    self.y -= 2
+                elif self.x > x2 and self.y > y2:
+                    self.x -= 2
+                    self.y -= 2
+                elif self.x < x2 and self.y < y2:
+                    self.x += 2
+                    self.y += 2
+                elif self.x > x2 and self.y < y2:
+                    self.x -= 2
+                    self.y += 2
         elif self.escolha == 'player':
-            if self.x == x and self.y < y:
+            if self.x == x and self.y < y or self.x == x + 1 and self.y < y:
                 self.y += 2
-            elif self.x == x and self.y > y:
+            elif self.x == x and self.y > y or self.x == x + 1 and self.y > y:
                 self.y -= 2
-            elif self.y == y and self.x > x:
+            elif self.y == y and self.x > x or self.y == y + 1 and self.x > x:
                 self.x -= 2
-            elif self.y == y and self.x < x:
+            elif self.y == y and self.x < x or self.y == y + 1 and self.x < x:
                 self.x += 2
             elif x - 80 <= self.x <= x + 80 and self.y < y:
                 self.y += 2

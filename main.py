@@ -312,7 +312,7 @@ def main():
 
         if gun:
             if len(lista_gun) >= 1:
-                for c in lista_speed:
+                for c in lista_gun:
                     arma_rect = arma.get_rect(topleft = (c[0], c[1]))
                     for sprite in todas_as_sprites:
                         if sprite.rect.colliderect(arma_rect):

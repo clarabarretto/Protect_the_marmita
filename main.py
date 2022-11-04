@@ -104,6 +104,8 @@ def main():
     coracao_morto = pygame.image.load('sprites/coracao_morto.png')
 
     bota = pygame.image.load('sprites/botas1.png')
+    arma = pygame.image.load('sprites/specialgun.png')
+
     todas_as_sprites = pygame.sprite.Group()
     sprite_almoco = pygame.sprite.Group()
     almoco = Almoco()
@@ -123,6 +125,11 @@ def main():
     efeito_velocidade = False
     lista_speed = list()
     listatempspeed = list()
+
+    gun = False
+    pegar_gun = False
+    lista_gun = list()
+    listatempgun = list()
 
     desenho_vida = False
     pegar_vida = False
@@ -258,6 +265,7 @@ def main():
                     y_inimigo = enemies.coord_y()
                     drop = drops.dropar_vida(x_inimigo, y_inimigo)
                     drop2 = drops.dropar_bota(x_inimigo, y_inimigo)
+                    drop3 = drops.dropar_gun(x_inimigo, y_inimigo)
                     #condição pra dropar o 'coração de vida'
                     if drop[2]:
                         desenho_vida = True
@@ -276,12 +284,33 @@ def main():
                         lista_speed.append(copia2)
                         listatempspeed.clear()
                     points += 1
-    
+
+                    if drop3[2] and gun == False:
+                        gun = True
+                        listatempgun.append(x_inimigo)
+                        listatempgun.append(y_inimigo)
+                        copia3 = listatempgun[:]
+                        lista_gun.append(copia3)
+                        listatempgun.clear()
+                    points += 1
+
         for tiro in bala:
             if tiro.coordenadas()[0] > 1080 or tiro.coordenadas()[0] < 0:
                 bala.remove(tiro)
             if tiro.coordenadas()[1] > 720 or tiro.coordenadas()[1] < 0:
                 bala.remove(tiro)
+
+        if gun:
+            if len(lista_gun) >= 1:
+                for c in lista_speed:
+                    arma_rect = arma.get_rect(topleft = (c[0], c[1]))
+                    for sprite in todas_as_sprites:
+                        if sprite.rect.colliderect(arma_rect):
+                            pegar_gun = True
+                            del lista_gun[0]
+
+        for c in lista_gun:
+            tela.blit(arma, (c[0], c[1]))
 
         if speed:
             if len(lista_speed) >= 1:
@@ -581,3 +610,4 @@ def main():
      
 # main()
 menu()
+

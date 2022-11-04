@@ -7,7 +7,8 @@ class Enemies(pygame.sprite.Sprite):
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
         self.sprites = []
-        self.sprites.append(pygame.image.load('sprites/monster1.png'))
+        self.sprites.append(pygame.image.load('sprites/inimigo1_1.png'))
+        self.sprites.append(pygame.image.load('sprites/inimigo1_2.png'))
         self.numero = randint(1,5)
         if self.numero <= 2:
             self.escolha = 'player'
@@ -20,6 +21,10 @@ class Enemies(pygame.sprite.Sprite):
         self.y = y
         self.rect.topleft = self.x, self.y
     def movimento(self, x, y, x2, y2):
+        self.image = self.sprites[int(self.atual)]
+        self.atual += 0.2
+        if self.atual > 2:
+            self.atual = 0
         if self.y == 0:
             self.y += 2
         elif self.x == 0:

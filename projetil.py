@@ -16,30 +16,33 @@ class Bala(pygame.sprite.Sprite):
         self.rect.topleft = x, y
     def movimentobala(self):
         if self.movimento == 'cima':
-            self.y -= 10
+            self.y -= 12
             self.rect.topleft = self.x, self.y
         if self.movimento == 'baixo':
-            self.y += 10
+            self.y += 12
             self.rect.topleft = self.x, self.y
         if self.movimento == 'esquerda':
-            self.x -= 10
+            self.x -= 12
             self.rect.topleft = self.x, self.y
         if self.movimento == 'direita':
-            self.x += 10
+            self.x += 12
             self.rect.topleft = self.x, self.y
         if self.movimento == 'nordeste':
-            self.x += 10
-            self.y -= 10
+            self.x += 12
+            self.y -= 12
             self.rect.topleft = self.x, self.y
         if self.movimento == 'noroeste':
-            self.x -= 10
-            self.y -= 10
+            self.x -= 12
+            self.y -= 12
             self.rect.topleft = self.x, self.y
         if self.movimento == 'sudeste':
-            self.x += 10
-            self.y += 10
+            self.x += 12
+            self.y += 12
             self.rect.topleft = self.x, self.y
         if self.movimento == 'sudoeste':
-            self.x -= 10
-            self.y += 10
+            self.x -= 12
+            self.y += 12
             self.rect.topleft = self.x, self.y
+    def coordenadas(self):
+        lista_coordenadas = (self.x, self.y)
+        return lista_coordenadas

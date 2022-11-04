@@ -6,13 +6,12 @@ class map(pygame.sprite.Sprite):
     def __init__(self, tela):
         pygame.sprite.Sprite.__init__(self)
         self.window = tela
-        self.img_mapa = {0:{'sprite': pygame.image.load('sprites/terra.png'), 'tipo' : 'piso'},
+        self.img_mapa = {0:{'sprite': pygame.image.load('sprites/piso3.png'), 'tipo' : 'piso'},
                          1:{'sprite': pygame.image.load('sprites/arvore.png'), 'tipo' : 'parede'},
                          2:{'sprite': pygame.image.load('sprites/grama2.png'), 'tipo' : 'piso'},
                          3:{'sprite': pygame.image.load('sprites/terrapedras.png'), 'tipo' : 'piso'},
                          4:{'sprite': pygame.image.load('sprites/madeira.png'), 'tipo' : 'parede'},
-                         5:{'sprite': pygame.image.load('sprites/chaocozinha.png'), 'tipo' : 'piso'},
-                         6:{'sprite': pygame.image.load('sprites/terragrama.png'), 'tipo' : 'piso'}}                        
+                         6:{'sprite': pygame.image.load('sprites/piso3.png'), 'tipo' : 'piso'}}                        
         self.maps = {'mapa 1': [[1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,1,1,1,1,1,1,1,1,1,1,1,1],
                                 [1,2,2,2,2,2,2,2,2,2,2,4,0,0,0,4,2,2,2,2,2,2,2,2,2,2,1],
                                 [1,2,4,4,4,4,4,4,4,4,4,4,0,0,0,4,4,4,4,4,4,4,4,4,4,2,1],

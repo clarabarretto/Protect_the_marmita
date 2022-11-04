@@ -371,7 +371,7 @@ def main():
 
             if event.type == KEYDOWN:
                 if event.key == K_UP and event.key == K_RIGHT and var_tiro >= 8:
-                    if gun == False:
+                    if pegar_gun == False:
                         bala.add(pr.Bala(x + 25, y, 'nordeste'))
                     else:
                         gun_dispare(x, y, bala)
@@ -380,7 +380,7 @@ def main():
                     var_parado = 0
                     var_tiro = 0
                 if event.key == K_UP and event.key == K_LEFT and var_tiro >= 8:
-                    if gun == False:
+                    if pegar_gun == False:
                         bala.add(pr.Bala(x, y, 'noroeste'))
                     else:
                         bala = gun_dispare(x, y, bala)
@@ -389,7 +389,7 @@ def main():
                     var_parado = 0
                     var_tiro = 0
                 if event.key == K_DOWN and event.key == K_RIGHT and var_tiro >= 8:
-                    if gun == False:
+                    if pegar_gun == False:
                         bala.add(pr.Bala(x + 25, y + 24, 'sudeste'))
                     else:
                         bala = gun_dispare(x, y, bala)
@@ -398,7 +398,7 @@ def main():
                     var_parado = 0
                     var_tiro = 0
                 if event.key == K_DOWN and event.key == K_LEFT and var_tiro >= 8:
-                    if gun == False:
+                    if pegar_gun == False:
                         bala.add(pr.Bala(x, y + 24, 'sudoeste'))
                     else:
                         bala = gun_dispare(x, y, bala)
@@ -407,7 +407,7 @@ def main():
                     var_parado = 0
                     var_tiro = 0
                 if event.key == K_UP and event.key == K_RIGHT and var_tiro >= 8:
-                    if gun == False:
+                    if pegar_gun == False:
                         bala.add(pr.Bala(x + 25, y + 1, 'nordeste'))
                     else:
                         bala = gun_dispare(x, y, bala)
@@ -416,7 +416,7 @@ def main():
                     var_parado = 0
                     var_tiro = 0
                 if event.key == K_UP and var_tiro >= 8:
-                    if gun == False:
+                    if pegar_gun == False:
                         bala.add(pr.Bala(x + 12, y - 1, 'cima'))
                     else:
                         bala = gun_dispare(x, y, bala)
@@ -425,7 +425,7 @@ def main():
                     var_parado = 0
                     var_tiro = 0
                 if event.key == K_DOWN and var_tiro >= 8:
-                    if gun == False:
+                    if pegar_gun == False:
                         bala.add(pr.Bala(x + 12, y + 25, 'baixo'))
                     else:
                         bala = gun_dispare(x, y, bala)
@@ -434,7 +434,7 @@ def main():
                     var_parado = 0
                     var_tiro = 0
                 if event.key == K_LEFT and var_tiro >= 8:
-                    if gun == False:
+                    if pegar_gun == False:
                         bala.add(pr.Bala(x - 1, y + 17, 'esquerda'))
                     else:
                         bala = gun_dispare(x, y, bala)
@@ -443,7 +443,7 @@ def main():
                     var_parado = 0
                     var_tiro = 0
                 if event.key == K_RIGHT and var_tiro >= 8:
-                    if gun == False:
+                    if pegar_gun == False:
                         bala.add(pr.Bala(x + 25, y + 17, 'direita'))
                     else:
                         bala = gun_dispare(x, y, bala)
@@ -503,7 +503,7 @@ def main():
                             pegar_vida = False
 
         if pygame.key.get_pressed()[K_RIGHT] and pygame.key.get_pressed()[K_UP] and var_tiro >= 8:
-            if gun == False:
+            if pegar_gun == False:
                 bala.add(pr.Bala(x + 25, y + 1, 'nordeste'))
             else:
                 bala = gun_dispare(x, y, bala)
@@ -512,7 +512,7 @@ def main():
             var_parado = 0
             var_tiro = 0
         if pygame.key.get_pressed()[K_LEFT] and pygame.key.get_pressed()[K_UP] and var_tiro >= 8:
-            if gun == False:
+            if pegar_gun == False:
                 bala.add(pr.Bala(x, y, 'noroeste'))
             else:
                 bala = gun_dispare(x, y, bala)
@@ -521,7 +521,7 @@ def main():
             var_parado = 0
             var_tiro = 0
         if pygame.key.get_pressed()[K_RIGHT] and pygame.key.get_pressed()[K_DOWN] and var_tiro >= 8:
-            if gun == False:
+            if pegar_gun == False:
                 bala.add(pr.Bala(x + 25, y + 24, 'sudeste'))
             else:
                 bala = gun_dispare(x, y, bala)
@@ -530,7 +530,7 @@ def main():
             var_parado = 0
             var_tiro = 0
         if pygame.key.get_pressed()[K_LEFT] and pygame.key.get_pressed()[K_DOWN] and var_tiro >= 8:
-            if gun == False:
+            if pegar_gun == False:
                 bala.add(pr.Bala(x, y + 24, 'sudoeste'))
             else:
                 bala = gun_dispare(x, y, bala)
@@ -539,7 +539,7 @@ def main():
             var_parado = 0
             var_tiro = 0
         if pygame.key.get_pressed()[K_UP] and var_tiro >= 8:
-            if gun == False:
+            if pegar_gun == False:
                 bala.add(pr.Bala(x + 12, y - 1, 'cima'))
             else:
                 bala = gun_dispare(x, y, bala)
@@ -548,7 +548,7 @@ def main():
             var_parado = 0
             var_tiro = 0
         if pygame.key.get_pressed()[K_DOWN] and var_tiro >= 8:
-            if gun == False:
+            if pegar_gun == False:
                 bala.add(pr.Bala(x + 12, y + 25, 'baixo'))
             else:
                 bala = gun_dispare(x, y, bala)
@@ -557,7 +557,7 @@ def main():
             var_parado = 0
             var_tiro = 0
         if pygame.key.get_pressed()[K_LEFT] and var_tiro >= 8:
-            if gun == False:
+            if pegar_gun == False:
                 bala.add(pr.Bala(x - 1, y + 17, 'esquerda'))
             else:
                 bala = gun_dispare(x, y, bala)
@@ -566,7 +566,7 @@ def main():
             var_parado = 0
             var_tiro = 0
         if pygame.key.get_pressed()[K_RIGHT] and var_tiro >= 8:
-            if gun == False:
+            if pegar_gun == False:
                 bala.add(pr.Bala(x + 25, y + 17, 'direita'))
             else:
                 bala = gun_dispare(x, y, bala)

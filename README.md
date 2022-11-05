@@ -31,7 +31,7 @@
   | ------------------------------ | -------------------------- |
   | **Boots of Swiftness** | aumento permanente de velocidade movimento |
   | **Heart Pieces** | aumenta em uma unidade a vida máxima |
-  | **Special Gun** | aumento temporário de velocidade de tiro |
+  | **Special Gun** | ativa tiros em todas as direções possíveis temporariamente |
 #
 
 ## Divisão de tarefas:

@@ -37,7 +37,7 @@
 
 |      Equipes      |     Tarefas (principal)     |
 | ------------------- | ------------------- |
-|  **gaca** e  **rbo3**|  Criação dos itens e Sistema de colisão com o personagem |
+|  **gaca** e  **rbo3**|  Criação dos itens, Sistema de colisão com o personagem e Sistema de Musica|
 |  **grml** e **mbmpg** |  Criação do Personagem juntamente com suas mecanicas e Criação do mapa |
 |  **ahsl** e **mcfgb** |  Tela Inicial e Organização do código |
 

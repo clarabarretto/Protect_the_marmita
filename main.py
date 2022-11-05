@@ -310,17 +310,16 @@ def main():
                     #condição pra dropar a 'bota'
                     if drop2[2] and speed == False:
                         speed = True
-                        var_tempo_bota = 900
+                        var_tempo_bota = 700
                         listatempspeed.append(x_inimigo)
                         listatempspeed.append(y_inimigo)
                         copia2 = listatempspeed[:]
                         lista_speed.append(copia2)
                         listatempspeed.clear()
-                    points += 1
 
                     if drop3[2] and gun == False:
                         gun = True
-                        var_tempo_gun = 900
+                        var_tempo_gun = 700
                         listatempgun.append(x_inimigo)
                         listatempgun.append(y_inimigo)
                         copia3 = listatempgun[:]

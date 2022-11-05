@@ -29,7 +29,7 @@
 ## Itens:
   |            Itens              |          Efeitos           |
   | ------------------------------ | -------------------------- |
-  | **Boots of Swiftness** | aumento permanente de velocidade movimento |
+  | **Boots of Swiftness** | aumento da velocidade do personagem por um tempo específico |
   | **Heart Pieces** | aumenta em uma unidade a vida máxima |
   | **Special Gun** | ativa tiros em todas as direções possíveis temporariamente |
 #

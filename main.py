@@ -22,6 +22,17 @@ texto_inicial = fonte.render('AssaCInato!', False, (0, 0, 0))
 pygame.display.set_caption('AssaCInato')
 menu_image = pygame.image.load('sprites/menu.jpg')
 
+pygame.mixer.init()
+
+pygame.mixer.music.load("sounds/theme.mp3")
+pygame.mixer.music.set_volume(0.1)
+pygame.mixer.music.play(-1)
+
+som_dano = pygame.mixer.Sound('sounds/hurt.wav')
+som_morte = pygame.mixer.Sound('sounds/dano.wav')
+som_morte_inimigo = pygame.mixer.Sound('sounds/morte.wav')
+som_bala = pygame.mixer.Sound('sounds/bala.wav')
+
 class Almoco(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
@@ -146,7 +157,7 @@ def main():
     lista_drop_vida = list()
     listatempvida = list()
     texto_perdeu = fonte2.render('FOI DE F!', False, (255, 0, 0))
-    texto_ganhou = fonte2.render("GEYDSON!", False, (0, 255, 0))
+    texto_ganhou = fonte2.render("YOU WIN!", False, (0, 255, 0))
     lista_barra_vida = [[5, 5], [58, 5], [111, 5], [164, 5], [217, 5]]
     coordenadas_vida = ([5, 5], [58, 5], [111, 5], [164, 5], [217, 5])
     lista_passagem_vida = []
@@ -273,6 +284,7 @@ def main():
                     inimigos.remove(enemies)
                     x_inimigo = enemies.coord_x()
                     y_inimigo = enemies.coord_y()
+                    som_morte_inimigo.play()
                     drop = drops.dropar_vida(x_inimigo, y_inimigo)
                     drop2 = drops.dropar_bota(x_inimigo, y_inimigo)
                     drop3 = drops.dropar_gun(x_inimigo, y_inimigo)
@@ -373,84 +385,102 @@ def main():
                 if event.key == K_UP and event.key == K_RIGHT and var_tiro >= 8:
                     if pegar_gun == False:
                         bala.add(pr.Bala(x + 25, y, 'nordeste'))
+                        som_bala.play()
                     else:
                         gun_dispare(x, y, bala)
                     player.tiro_cima(x, y)
                     var_sprite_tiro = 'cima'
                     var_parado = 0
                     var_tiro = 0
+                    som_bala.play()
                 if event.key == K_UP and event.key == K_LEFT and var_tiro >= 8:
                     if pegar_gun == False:
                         bala.add(pr.Bala(x, y, 'noroeste'))
+                        som_bala.play()
                     else:
                         bala = gun_dispare(x, y, bala)
                     player.tiro_cima(x, y)
                     var_sprite_tiro = 'cima'
                     var_parado = 0
                     var_tiro = 0
+                    som_bala.play()
                 if event.key == K_DOWN and event.key == K_RIGHT and var_tiro >= 8:
                     if pegar_gun == False:
                         bala.add(pr.Bala(x + 25, y + 24, 'sudeste'))
+                        som_bala.play()
                     else:
                         bala = gun_dispare(x, y, bala)
                     player.tiro_baixo(x, y)
                     var_sprite_tiro = 'baixo'
                     var_parado = 0
                     var_tiro = 0
+                    som_bala.play()
                 if event.key == K_DOWN and event.key == K_LEFT and var_tiro >= 8:
                     if pegar_gun == False:
                         bala.add(pr.Bala(x, y + 24, 'sudoeste'))
+                        som_bala.play()
                     else:
                         bala = gun_dispare(x, y, bala)
                     player.tiro_baixo(x, y)
                     var_sprite_tiro = 'baixo'
                     var_parado = 0
                     var_tiro = 0
+                    som_bala.play()
                 if event.key == K_UP and event.key == K_RIGHT and var_tiro >= 8:
                     if pegar_gun == False:
                         bala.add(pr.Bala(x + 25, y + 1, 'nordeste'))
+                        som_bala.play()
                     else:
                         bala = gun_dispare(x, y, bala)
                     player.tiro_cima(x, y)
                     var_sprite_tiro = 'baixo'
                     var_parado = 0
                     var_tiro = 0
+                    som_bala.play()
                 if event.key == K_UP and var_tiro >= 8:
                     if pegar_gun == False:
                         bala.add(pr.Bala(x + 12, y - 1, 'cima'))
+                        som_bala.play()
                     else:
                         bala = gun_dispare(x, y, bala)
                     player.tiro_cima(x, y)
                     var_sprite_tiro = 'cima'
                     var_parado = 0
                     var_tiro = 0
+                    som_bala.play()
                 if event.key == K_DOWN and var_tiro >= 8:
                     if pegar_gun == False:
                         bala.add(pr.Bala(x + 12, y + 25, 'baixo'))
+                        som_bala.play()
                     else:
                         bala = gun_dispare(x, y, bala)
                     player.tiro_baixo(x, y)
                     var_sprite_tiro = 'baixo'
                     var_parado = 0
                     var_tiro = 0
+                    som_bala.play()
                 if event.key == K_LEFT and var_tiro >= 8:
                     if pegar_gun == False:
                         bala.add(pr.Bala(x - 1, y + 17, 'esquerda'))
+                        som_bala.play()
                     else:
                         bala = gun_dispare(x, y, bala)
                     player.tiro_esquerda(x, y)
                     var_sprite_tiro = 'esquerda'
                     var_parado = 0
                     var_tiro = 0
+                    som_bala.play()
                 if event.key == K_RIGHT and var_tiro >= 8:
                     if pegar_gun == False:
                         bala.add(pr.Bala(x + 25, y + 17, 'direita'))
+                        som_bala.play()
                     else:
                         bala = gun_dispare(x, y, bala)
                     player.tiro_direita(x, y)
                     var_sprite_tiro = 'direita'
                     var_parado = 0
                     var_tiro = 0
+                    som_bala.play()
                 if event.key == K_a and x != 0 and var_esquerda == True:
                     if pegar_bota == False:
                         x -= 4
@@ -505,75 +535,91 @@ def main():
         if pygame.key.get_pressed()[K_RIGHT] and pygame.key.get_pressed()[K_UP] and var_tiro >= 8:
             if pegar_gun == False:
                 bala.add(pr.Bala(x + 25, y + 1, 'nordeste'))
+                som_bala.play()
             else:
                 bala = gun_dispare(x, y, bala)
             player.tiro_cima(x, y)
             var_sprite_tiro = 'cima'
             var_parado = 0
             var_tiro = 0
+            som_bala.play()
         if pygame.key.get_pressed()[K_LEFT] and pygame.key.get_pressed()[K_UP] and var_tiro >= 8:
             if pegar_gun == False:
                 bala.add(pr.Bala(x, y, 'noroeste'))
+                som_bala.play()
             else:
                 bala = gun_dispare(x, y, bala)
             player.tiro_cima(x, y)
             var_sprite_tiro = 'cima'
             var_parado = 0
             var_tiro = 0
+            som_bala.play()
         if pygame.key.get_pressed()[K_RIGHT] and pygame.key.get_pressed()[K_DOWN] and var_tiro >= 8:
             if pegar_gun == False:
                 bala.add(pr.Bala(x + 25, y + 24, 'sudeste'))
+                som_bala.play()
             else:
                 bala = gun_dispare(x, y, bala)
             player.tiro_baixo(x, y)
             var_sprite_tiro = 'baixo'
             var_parado = 0
             var_tiro = 0
+            som_bala.play()
         if pygame.key.get_pressed()[K_LEFT] and pygame.key.get_pressed()[K_DOWN] and var_tiro >= 8:
             if pegar_gun == False:
                 bala.add(pr.Bala(x, y + 24, 'sudoeste'))
+                som_bala.play()
             else:
                 bala = gun_dispare(x, y, bala)
             player.tiro_baixo(x, y)
             var_sprite_tiro = 'baixo'
             var_parado = 0
             var_tiro = 0
+            som_bala.play()
         if pygame.key.get_pressed()[K_UP] and var_tiro >= 8:
             if pegar_gun == False:
                 bala.add(pr.Bala(x + 12, y - 1, 'cima'))
+                som_bala.play()
             else:
                 bala = gun_dispare(x, y, bala)
             player.tiro_cima(x, y)
             var_sprite_tiro = 'cima'
             var_parado = 0
             var_tiro = 0
+            som_bala.play()
         if pygame.key.get_pressed()[K_DOWN] and var_tiro >= 8:
             if pegar_gun == False:
                 bala.add(pr.Bala(x + 12, y + 25, 'baixo'))
+                som_bala.play()
             else:
                 bala = gun_dispare(x, y, bala)
             player.tiro_baixo(x, y)
             var_sprite_tiro = 'baixo'
             var_parado = 0
             var_tiro = 0
+            som_bala.play()
         if pygame.key.get_pressed()[K_LEFT] and var_tiro >= 8:
             if pegar_gun == False:
                 bala.add(pr.Bala(x - 1, y + 17, 'esquerda'))
+                som_bala.play()
             else:
                 bala = gun_dispare(x, y, bala)
             player.tiro_esquerda(x, y)
             var_sprite_tiro = 'esquerda'
             var_parado = 0
             var_tiro = 0
+            som_bala.play()
         if pygame.key.get_pressed()[K_RIGHT] and var_tiro >= 8:
             if pegar_gun == False:
                 bala.add(pr.Bala(x + 25, y + 17, 'direita'))
+                som_bala.play()
             else:
                 bala = gun_dispare(x, y, bala)
             player.tiro_direita(x, y)
             var_sprite_tiro = 'direita'
             var_parado = 0
             var_tiro = 0
+            som_bala.play()
         if pygame.key.get_pressed()[K_a] and x != 0 and var_esquerda == True:
             if pegar_bota == False:
                 x -= 4
@@ -623,11 +669,14 @@ def main():
                     # quando encostar no player perde 1 barra de vida
                     points += 1
                     if len(lista_barra_vida) > 1:
+                        som_dano.play()
                         inimigos.remove(enemies)
                         quantidade = len(lista_barra_vida) - 1
                         del lista_barra_vida[quantidade]
+                        
 
                     else:
+                        som_morte.play()
                         inimigos.remove(enemies)
                         quantidade = len(lista_barra_vida) - 1
                         del lista_barra_vida[quantidade]

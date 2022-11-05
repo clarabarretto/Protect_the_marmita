@@ -19,7 +19,7 @@ fonte_inicial = pygame.font.SysFont('arial', 3000, True, False)
 fonte2 = pygame.font.SysFont('arial', 120, True, False)
 tela = pygame.display.set_mode((larg, alt))
 texto_inicial = fonte.render('AssaCInato!', False, (0, 0, 0))
-pygame.display.set_caption('AssaCInato')
+pygame.display.set_caption('Protect the Marmita!')
 menu_image = pygame.image.load('sprites/menu.jpg')
 
 pygame.mixer.init()

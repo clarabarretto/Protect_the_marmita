@@ -55,4 +55,8 @@
 #
 ## Desafios/Experiência:
 
-> Coordenar o trabalho da equipe, quem vai fazer o que, como cada pessoa está fazendo sua parte, como juntar o que foi feito, assim como o uso do github, ferramenta que muitos dos membros do grupo não estavam familiarizados, foram alguns dos maiores problemas encontrados.
+> Em relação a erros, no início do projeto tivemos ideias grandiosas demais, mas ainda não tínhamos contato nenhum com a biblioteca do pygame e nem com um projeto dessa escala. Por isso acabamos por perder um tempo no início do projeto com uma ideia que era muito fora do nosso alcance dado o tempo e experiência. Felizmente percebemos isso rápido e conseguimos mudar onosso objetivo e abordagem, fazendo assim, esse jogo que apresentamos agora, que não acaba por ser muito grandioso, porém gostamos muito do seu rsultado final.
+>
+> Coordenar o trabalho da equipe, quem vai fazer o que, como cada pessoa está fazendo sua parte, como juntar o que foi feito, assim como o uso do github, ferramenta que muitos dos membros do grupo não estavam familiarizados, foram alguns dos maiores problemas encontrados. Mas com o proceder do trabalho e estudo do gitHub principalmente, essas dificuldades acabaram sumindo bastante, já que as atividades de cada um ficaram bem definidas e o entendimento da ferramenta também e assim a criação dojogo acabou fluindo até melhor do que pensamos.
+>
+>Portanto, após a produção desse projeto, podemos olhar para trás e perceber o quão importanteé um planejamento e a organização de equipe, uma pequena equipe bem entrosada e definida consegue fazer algo muito mais bem feito do que uma gigante que não se ajuda. Assim fica a lição aprendida nesse trabalho é que nunca se sabe tudo, sempre alguém poderá ajudar naquilo que é preciso e que se deve ter humildde para aceitar essa ajuda.

@@ -146,11 +146,13 @@ def main():
     efeito_velocidade = False
     lista_speed = list()
     listatempspeed = list()
+    var_tempo_bota = 0
 
     gun = False
     pegar_gun = False
     lista_gun = list()
     listatempgun = list()
+    var_tempo_gun = 0
 
     desenho_vida = False
     pegar_vida = False
@@ -165,6 +167,14 @@ def main():
     while True:
         if var_pause == True:
             pause()
+        var_tempo_bota -= 1
+        if var_tempo_bota < 0:
+            speed = False
+            pegar_bota = False
+        var_tempo_gun -= 1
+        if var_tempo_gun < 0:
+            gun = False
+            pegar_gun = False
         var_tempo += 1
         var_parado += 1
         var_direita = True
@@ -300,6 +310,7 @@ def main():
                     #condição pra dropar a 'bota'
                     if drop2[2] and speed == False:
                         speed = True
+                        var_tempo_bota = 900
                         listatempspeed.append(x_inimigo)
                         listatempspeed.append(y_inimigo)
                         copia2 = listatempspeed[:]
@@ -309,6 +320,7 @@ def main():
 
                     if drop3[2] and gun == False:
                         gun = True
+                        var_tempo_gun = 900
                         listatempgun.append(x_inimigo)
                         listatempgun.append(y_inimigo)
                         copia3 = listatempgun[:]

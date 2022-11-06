@@ -45,9 +45,13 @@
   
   
   
-  
-  
-
+  #
+  ## Bibliotecas e Ferramentas:
+|      Biblioteca e ferramentas      |     Aplicação     |
+| ------------------- | ------------------- |
+|  Random  |  Utilizamos essa biblitoteca, para gerar números aleatórios com randint, que escolhe um número aleatoriamente no intervalo que definimos. Isso foi aplicado em diversas partes do código, como na definição do drop e se o inimigo seguirá o player ou atacará a geladeira.|
+|  Sys |  Da bibliotca Sys, utilizamos a função exit, que é capaz de parar o código sem ter que gerar um erro para isso. Utilizamos isso, nas situações em que precisavamos finalizar o jogo, no caso quando ele acabava ou exitia uma situação que o levava ao fim. |
+| Piskel |  Essa é uma ferramenta que serve como editor de sprites, dela fizemos uso bem intenso, basicamene para formatar todas sprites usadas no jogo além de criar algumas. |
   
   
   

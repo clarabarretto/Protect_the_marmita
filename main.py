@@ -112,7 +112,7 @@ def main():
     var_tempo = 0
     qntd_inimigos = 0
 
-    mapa = pygame.image.load('sprites/mapamundi.png')
+    
 
     #corações:
     coracao = pygame.image.load(
@@ -184,13 +184,19 @@ def main():
         if var_pause == True:
             pause()
         var_tempo_bota -= 1
-        if var_tempo_bota < 0:
+        if var_tempo_bota == 0:
             speed = False
             pegar_bota = False
         var_tempo_gun -= 1
-        if var_tempo_gun < 0:
+        if var_tempo_gun == 0:
             gun = False
             pegar_gun = False
+        var_tempo_cartucho -= 1
+        if var_tempo_cartucho == 0:
+            cartucho = False
+            pegar_cartucho = False
+        if pegar_cartucho is True:
+            var_tiro += 3
         var_tempo += 1
         var_parado += 1
         var_direita = True
@@ -345,8 +351,8 @@ def main():
                         lista_gun.append(copia3)
                         listatempgun.clear()
 
-                    #condiação pra dropar 'cartucho'
-                    if drop4[2] and ceifador == False:
+                    #condição pra dropar 'cartucho'
+                    if drop4[2] and cartucho is False:
                         cartucho = True
                         var_tempo_cartucho = 700
                         listatempcartucho.append(x_inimigo)
@@ -355,15 +361,15 @@ def main():
                         lista_cartucho.append(copia4)
                         listatempcartucho.clear()
 
-                    #condiação pra dropar 'ceifador'
-                    if drop5[2]:
+                    #condição pra dropar 'ceifador'
+                    if drop5[2] and ceifador is False:
                         ceifador = True
-                        var_tempo_ceifador = 700
                         listatempceifador.append(x_inimigo)
                         listatempceifador.append(y_inimigo)
                         copia5 = listatempceifador[:]
                         lista_ceifador.append(copia5)
                         listatempceifador.clear()
+                    points += 1
 
 
 
@@ -394,6 +400,15 @@ def main():
                         if sprite.rect.colliderect(ceifador_rect):
                             pegar_ceifador = True
                             del lista_ceifador[0]
+        
+        if pegar_ceifador:
+            ceifador = False
+            pegar_ceifador = False
+            for enemie in inimigos:
+                inimigos.remove(enemie)
+                som_morte_inimigo.play()
+                points += 1
+
 
         for c in lista_ceifador:
             tela.blit(ceifador_imagem, (c[0], c[1]))

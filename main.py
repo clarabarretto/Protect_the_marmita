@@ -126,6 +126,8 @@ def main():
 
     bota = pygame.image.load('sprites/botas1.png')
     arma = pygame.image.load('sprites/specialgun.png')
+    ceifador_imagem = pygame.image.load('sprites/deadall.png')
+    cartucho_imagem = pygame.image.load('sprites/cartuchorapido.png')
 
     todas_as_sprites = pygame.sprite.Group()
     sprite_almoco = pygame.sprite.Group()
@@ -141,19 +143,37 @@ def main():
     mapa = mp.map(tela)
     obstaculos = mapa.check_obstaculos()
 
+    #sempre usar a variavel que tem pegar antes 
+
+    #cartucho
+    ceifador = False
+    pegar_ceifador = False
+    lista_ceifador = list()
+    listatempceifador = list()
+    var_tempo_ceifador = 0
+
+    #cartucho
+    cartucho = False
+    pegar_cartucho = False
+    lista_cartucho = list()
+    listatempcartucho = list()
+    var_tempo_cartucho = 0
+
+    #bota
     speed = False
     pegar_bota = False
-    efeito_velocidade = False
     lista_speed = list()
     listatempspeed = list()
     var_tempo_bota = 0
 
+    #specila gun
     gun = False
     pegar_gun = False
     lista_gun = list()
     listatempgun = list()
     var_tempo_gun = 0
 
+    #vida
     desenho_vida = False
     pegar_vida = False
     lista_drop_vida = list()
@@ -298,6 +318,8 @@ def main():
                     drop = drops.dropar_vida(x_inimigo, y_inimigo)
                     drop2 = drops.dropar_bota(x_inimigo, y_inimigo)
                     drop3 = drops.dropar_gun(x_inimigo, y_inimigo)
+                    drop4 = drops.dropar_tiro_rapido(x_inimigo, y_inimigo)
+                    drop5 = drops.dropar_ceifador(x_inimigo, y_inimigo)
                     #condição pra dropar o 'coração de vida'
                     if drop[2]:
                         desenho_vida = True
@@ -317,6 +339,7 @@ def main():
                         lista_speed.append(copia2)
                         listatempspeed.clear()
 
+                    #condiação pra dropar 'special gun'
                     if drop3[2] and gun == False:
                         gun = True
                         var_tempo_gun = 700
@@ -325,13 +348,59 @@ def main():
                         copia3 = listatempgun[:]
                         lista_gun.append(copia3)
                         listatempgun.clear()
-                    points += 1
+
+                    #condiação pra dropar 'cartucho'
+                    if drop4[2] and ceifador == False:
+                        cartucho = True
+                        var_tempo_cartucho = 700
+                        listatempcartucho.append(x_inimigo)
+                        listatempcartucho.append(y_inimigo)
+                        copia4 = listatempcartucho[:]
+                        lista_cartucho.append(copia4)
+                        listatempcartucho.clear()
+
+                    #condiação pra dropar 'ceifador'
+                    if drop5[2]:
+                        ceifador = True
+                        var_tempo_ceifador = 700
+                        listatempceifador.append(x_inimigo)
+                        listatempceifador.append(y_inimigo)
+                        copia5 = listatempceifador[:]
+                        lista_ceifador.append(copia5)
+                        listatempceifador.clear()
+
+
 
         for tiro in bala:
             if tiro.coordenadas()[0] > 1080 or tiro.coordenadas()[0] < 0:
                 bala.remove(tiro)
             if tiro.coordenadas()[1] > 720 or tiro.coordenadas()[1] < 0:
                 bala.remove(tiro)
+
+
+        if cartucho:
+            if len(lista_cartucho) >= 1:
+                for c in lista_cartucho:
+                    cartucho_rect = cartucho_imagem.get_rect(topleft = (c[0], c[1]))
+                    for sprite in todas_as_sprites:
+                        if sprite.rect.colliderect(cartucho_rect):
+                            pegar_cartucho = True
+                            del lista_cartucho[0]
+
+        for c in lista_cartucho:
+            tela.blit(cartucho_imagem, (c[0], c[1]))
+
+        if ceifador:
+            if len(lista_ceifador) >= 1:
+                for c in lista_ceifador:
+                    ceifador_rect = ceifador_imagem.get_rect(topleft = (c[0], c[1]))
+                    for sprite in todas_as_sprites:
+                        if sprite.rect.colliderect(ceifador_rect):
+                            pegar_ceifador = True
+                            del lista_ceifador[0]
+
+        for c in lista_ceifador:
+            tela.blit(ceifador_imagem, (c[0], c[1]))
 
         if gun:
             if len(lista_gun) >= 1:
@@ -731,4 +800,6 @@ def main():
      
 # main()
 menu()
+
+
 

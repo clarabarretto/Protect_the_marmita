@@ -1,6 +1,5 @@
 import pygame
 from pygame.locals import *
-from pickle import TRUE
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):

@@ -4,7 +4,7 @@
   O jogador começa a fase com 5 corações de vida, perdendo um de vida sempre que colide com um inimigo, a bota aumenta a velocidade do seu persoangem facilitando na hora de se movimentar pelo mapa e a arma é o item especial do jogo que faz com que as balas vão em todas as direções. Ambas são upgrades permanentes enquanto os corações são itens consumíveis, podendo ter mais de um na tela ao mesmo tempo. 
 #
 ## Equipe:
->- Geydson Rennan <grml>
+>- Geydson Renan <grml>
 >- Gabriel Aragão <gaca>
 >- Antonio Henrique <ahsl>
 >- Maria Beatriz Martins <mbmpg>

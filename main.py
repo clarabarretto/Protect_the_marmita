@@ -1,12 +1,13 @@
 import pygame
 import enemies as en
+import drops
 import projetil as pr
+
 from pygame.locals import *
 from sys import exit
 from random import randint
 from random import choice
 import personagem as perso
-import drops
 import mapa as mp
 
 pygame.init()
@@ -98,8 +99,6 @@ def menu():
 
 
 def main():
-    coordenadas_y = [408, 374, 442, 0, 720]
-    coordenadas_x = [504, 528, 552, 576, 0, 1080]
     coordenadas = [(0, 520), (0, 480), (0, 560), (720, 520), (720, 480), (720, 560),
                    (320, 0), (320, 1080), (360, 0), (360, 1080), (400, 0), (400, 1080)]
     space = False
@@ -109,8 +108,6 @@ def main():
     y = 320
     x2 = 520
     y2 = 360
-    xbv = 0
-    ybv = 0
     var_inimigo = 0
     relogio = pygame.time.Clock()
     var_tempo = 0
@@ -143,7 +140,6 @@ def main():
 
     speed = False
     pegar_bota = False
-    efeito_velocidade = False
     lista_speed = list()
     listatempspeed = list()
 
@@ -706,7 +702,7 @@ def main():
 
         mensage = f"score : {points}"
         text = fonte.render(mensage, False, (255, 255, 255))
-        tela.blit(text, (980, 10))
+        tela.blit(text, (960, 10))
         # if space == False:
         # tela.blit(texto_inicial, (500, 240))      #esse era o if que apagava o nome 'assacinato'
 

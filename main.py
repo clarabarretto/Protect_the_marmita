@@ -33,6 +33,8 @@ som_dano = pygame.mixer.Sound('sounds/hurt.wav')
 som_morte = pygame.mixer.Sound('sounds/dano.wav')
 som_morte_inimigo = pygame.mixer.Sound('sounds/morte.wav')
 som_bala = pygame.mixer.Sound('sounds/bala.wav')
+som_dano_geladeira = pygame.mixer.Sound('sounds/dano_geladeira.mp3')
+som_passos = pygame.mixer.Sound('sounds/andando.mpeg')
 
 class Almoco(pygame.sprite.Sprite):
     def __init__(self):
@@ -138,6 +140,7 @@ def main():
     var_parado = 0
     mapa = mp.map(tela)
     obstaculos = mapa.check_obstaculos()
+    var_som = 0
 
     #sempre usar a variavel que tem pegar antes 
 
@@ -146,7 +149,7 @@ def main():
     pegar_ceifador = False
     lista_ceifador = list()
     listatempceifador = list()
-    var_tempo_ceifador = 0
+    var_tempo_ceifador_drop = 0
 
     #cartucho
     cartucho = False
@@ -154,6 +157,7 @@ def main():
     lista_cartucho = list()
     listatempcartucho = list()
     var_tempo_cartucho = 0
+    var_tempo_cartucho_drop = 0
 
     #bota
     speed = False
@@ -161,6 +165,7 @@ def main():
     lista_speed = list()
     listatempspeed = list()
     var_tempo_bota = 0
+    var_tempo_bota_drop = 0
 
     #specila gun
     gun = False
@@ -168,6 +173,7 @@ def main():
     lista_gun = list()
     listatempgun = list()
     var_tempo_gun = 0
+    var_tempo_gun_drop = 0
 
     #vida
     desenho_vida = False
@@ -175,7 +181,7 @@ def main():
     lista_drop_vida = list()
     listatempvida = list()
     texto_perdeu = fonte2.render('FOI DE F!', False, (255, 0, 0))
-    texto_ganhou = fonte2.render("YOU WIN!", False, (0, 255, 0))
+    texto_ganhou = fonte2.render("YOU WON!", False, (0, 255, 0))
     lista_barra_vida = [[5, 5], [58, 5], [111, 5], [164, 5], [217, 5]]
     coordenadas_vida = ([5, 5], [58, 5], [111, 5], [164, 5], [217, 5])
     lista_passagem_vida = []
@@ -183,6 +189,22 @@ def main():
     while True:
         if var_pause == True:
             pause()
+        var_tempo_gun_drop -= 1
+        var_tempo_bota_drop -= 1
+        var_tempo_cartucho_drop -= 1
+        var_tempo_ceifador_drop -= 1
+        if var_tempo_ceifador_drop == 0:
+            lista_ceifador.clear()
+            ceifador = False
+        if var_tempo_gun_drop == 0:
+            lista_gun.clear()
+            gun = False
+        if var_tempo_bota_drop == 0:
+            lista_speed.clear()
+            speed = False
+        if var_tempo_cartucho_drop == 0:
+            lista_cartucho.clear()
+            cartucho = False
         var_tempo_bota -= 1
         if var_tempo_bota == 0:
             speed = False
@@ -204,6 +226,7 @@ def main():
         var_cima = True
         var_baixo = True
         var_tiro += 1
+        var_som += 1
         if var_tiro >= 8:     
             var_sprite_tiro = None
         spawn = choice(coordenadas)
@@ -334,7 +357,7 @@ def main():
                     #condição pra dropar a 'bota'
                     if drop2[2] and speed == False:
                         speed = True
-                        var_tempo_bota = 700
+                        var_tempo_bota_drop = 500
                         listatempspeed.append(x_inimigo)
                         listatempspeed.append(y_inimigo)
                         copia2 = listatempspeed[:]
@@ -344,7 +367,7 @@ def main():
                     #condiação pra dropar 'special gun'
                     if drop3[2] and gun == False:
                         gun = True
-                        var_tempo_gun = 700
+                        var_tempo_gun_drop = 500
                         listatempgun.append(x_inimigo)
                         listatempgun.append(y_inimigo)
                         copia3 = listatempgun[:]
@@ -354,7 +377,7 @@ def main():
                     #condição pra dropar 'cartucho'
                     if drop4[2] and cartucho is False:
                         cartucho = True
-                        var_tempo_cartucho = 700
+                        var_tempo_cartucho_drop = 500
                         listatempcartucho.append(x_inimigo)
                         listatempcartucho.append(y_inimigo)
                         copia4 = listatempcartucho[:]
@@ -364,6 +387,7 @@ def main():
                     #condição pra dropar 'ceifador'
                     if drop5[2] and ceifador is False:
                         ceifador = True
+                        var_tempo_ceifador_drop = 500
                         listatempceifador.append(x_inimigo)
                         listatempceifador.append(y_inimigo)
                         copia5 = listatempceifador[:]
@@ -387,6 +411,8 @@ def main():
                     for sprite in todas_as_sprites:
                         if sprite.rect.colliderect(cartucho_rect):
                             pegar_cartucho = True
+                            var_tempo_cartucho = 700
+                            var_tempo_cartucho_drop = 0
                             del lista_cartucho[0]
 
         for c in lista_cartucho:
@@ -399,6 +425,7 @@ def main():
                     for sprite in todas_as_sprites:
                         if sprite.rect.colliderect(ceifador_rect):
                             pegar_ceifador = True
+                            var_tempo_ceifador_drop = 0
                             del lista_ceifador[0]
         
         if pegar_ceifador:
@@ -420,6 +447,8 @@ def main():
                     for sprite in todas_as_sprites:
                         if sprite.rect.colliderect(arma_rect):
                             pegar_gun = True
+                            var_tempo_gun = 700
+                            var_tempo_gun_drop = 0
                             del lista_gun[0]
 
         for c in lista_gun:
@@ -432,6 +461,8 @@ def main():
                 for sprite in todas_as_sprites:
                     if sprite.rect.colliderect(bota_rect):
                         pegar_bota = True
+                        var_tempo_bota = 700
+                        var_tempo_bota_drop = 0
                         del lista_speed[0]
 
         for c in lista_speed:
@@ -453,19 +484,63 @@ def main():
             if tiro.rect.colliderect(almoco):
                 bala.remove(tiro)
 
-        if qntd_inimigos <= 149:
-            if 19 <= var_inimigo <= 20 and var_tempo <= 100:
-                inimigos.add(en.Enemies(spawn[1], spawn[0]))
-                qntd_inimigos += 1
-            elif 18 <= var_inimigo <= 20 and 100 < var_tempo <= 500:
-                inimigos.add(en.Enemies(spawn[1], spawn[0]))
-                qntd_inimigos += 1
-            elif 16 <= var_inimigo <= 20 and 500 < var_tempo <= 2000:
-                inimigos.add(en.Enemies(spawn[1], spawn[0]))
-                qntd_inimigos += 1
-            elif 14 <= var_inimigo <= 20 and var_tempo > 2000:
-                inimigos.add(en.Enemies(spawn[1], spawn[0]))
-                qntd_inimigos += 1
+        if qntd_inimigos <= 499:
+            if qntd_inimigos < 50:
+                if 18 <= var_inimigo <= 20:
+                    inimigos.add(en.Enemies(spawn[1], spawn[0]))
+                    qntd_inimigos += 1
+            elif qntd_inimigos >= 50 and qntd_inimigos < 200:
+                if 15 <= var_inimigo <= 20:
+                    inimigos.add(en.Enemies(spawn[1], spawn[0]))
+                    qntd_inimigos += 1
+            elif qntd_inimigos >= 200 and qntd_inimigos < 250:
+                if 12 <= var_inimigo <= 20:
+                    inimigos.add(en.Enemies(spawn[1], spawn[0]))
+                    qntd_inimigos += 1
+            elif qntd_inimigos >= 250 and qntd_inimigos < 300:
+                if 18 <= var_inimigo <= 20:
+                    inimigos.add(en.Enemies(spawn[1], spawn[0]))
+                    qntd_inimigos += 1
+            elif qntd_inimigos >= 300 and qntd_inimigos < 350:
+                if 15 <= var_inimigo <= 20:
+                    inimigos.add(en.Enemies(spawn[1], spawn[0]))
+                    qntd_inimigos += 1
+            elif qntd_inimigos >= 350 and qntd_inimigos < 400:
+                if 12 <= var_inimigo <= 20:
+                    inimigos.add(en.Enemies(spawn[1], spawn[0]))
+                    qntd_inimigos += 1
+            elif qntd_inimigos >= 400 and qntd_inimigos < 450:
+                if 15 <= var_inimigo <= 20:
+                    inimigos.add(en.Enemies(spawn[1], spawn[0]))
+                    qntd_inimigos += 1
+            elif qntd_inimigos >= 450 and qntd_inimigos < 500:
+                if 12 <= var_inimigo <= 20:
+                    inimigos.add(en.Enemies(spawn[1], spawn[0]))
+                    qntd_inimigos += 1
+            elif qntd_inimigos >= 500 and qntd_inimigos < 550:
+                if 18 <= var_inimigo <= 20:
+                    inimigos.add(en.Enemies(spawn[1], spawn[0]))
+                    qntd_inimigos += 1
+            elif qntd_inimigos >= 550 and qntd_inimigos < 700:
+                if 15 <= var_inimigo <= 20:
+                    inimigos.add(en.Enemies(spawn[1], spawn[0]))
+                    qntd_inimigos += 1
+            elif qntd_inimigos >= 700 and qntd_inimigos < 800:
+                if 12 <= var_inimigo <= 20:
+                    inimigos.add(en.Enemies(spawn[1], spawn[0]))
+                    qntd_inimigos += 1
+            elif qntd_inimigos >= 800 and qntd_inimigos < 850:
+                if 10 <= var_inimigo <= 20:
+                    inimigos.add(en.Enemies(spawn[1], spawn[0]))
+                    qntd_inimigos += 1
+            elif qntd_inimigos >= 850 and qntd_inimigos < 900:
+                if 18 <= var_inimigo <= 20:
+                    inimigos.add(en.Enemies(spawn[1], spawn[0]))
+                    qntd_inimigos += 1
+            elif qntd_inimigos >= 900 and qntd_inimigos < 1000:
+                if 12 <= var_inimigo <= 20:
+                    inimigos.add(en.Enemies(spawn[1], spawn[0]))
+                    qntd_inimigos += 1
 
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -573,6 +648,9 @@ def main():
                     var_tiro = 0
                     som_bala.play()
                 if event.key == K_a and x != 0 and var_esquerda == True:
+                    if var_som > 8:
+                        som_passos.play()
+                        var_som = 0
                     if pegar_bota == False:
                         x -= 4
                     var_parado = 0
@@ -583,6 +661,9 @@ def main():
                     else:
                         player.movimento_tiro(x, y, var_sprite_tiro)
                 if event.key == K_d and x != 1055 and var_direita == True:
+                    if var_som > 8:
+                        som_passos.play()
+                        var_som = 0
                     if pegar_bota == False:
                         x += 4
                     var_parado = 0
@@ -593,6 +674,9 @@ def main():
                     else:
                         player.movimento_tiro(x, y, var_sprite_tiro)
                 if event.key == K_w and y != 0 and var_cima == True:
+                    if var_som > 8:
+                        som_passos.play()
+                        var_som = 0
                     if pegar_bota == False:
                         y -= 4
                     var_parado = 0
@@ -603,6 +687,9 @@ def main():
                     else:
                         player.movimento_tiro(x, y, var_sprite_tiro)
                 if event.key == K_s and y != 685 and var_baixo == True:
+                    if var_som > 8:
+                        som_passos.play()
+                        var_som = 0
                     if pegar_bota == False:
                         y += 4
                     var_parado = 0
@@ -712,6 +799,9 @@ def main():
             var_tiro = 0
             som_bala.play()
         if pygame.key.get_pressed()[K_a] and x != 0 and var_esquerda == True:
+            if var_som > 8:
+                som_passos.play()
+                var_som = 0
             if pegar_bota == False:
                 x -= 4
             var_parado = 0
@@ -722,6 +812,9 @@ def main():
             else:
                 player.movimento_tiro(x, y, var_sprite_tiro)
         if pygame.key.get_pressed()[K_d] and x != 1055 and var_direita == True:
+            if var_som > 8:
+                som_passos.play()
+                var_som = 0
             if pegar_bota == False:
                 x += 4
             var_parado = 0
@@ -732,6 +825,9 @@ def main():
             else:
                 player.movimento_tiro(x, y, var_sprite_tiro)
         if pygame.key.get_pressed()[K_w] and y != 0 and var_cima == True:
+            if var_som > 8:
+                som_passos.play()
+                var_som = 0
             if pegar_bota == False:
                 y -= 4
             var_parado = 0
@@ -742,6 +838,9 @@ def main():
             else:
                 player.movimento_tiro(x, y, var_sprite_tiro)
         if pygame.key.get_pressed()[K_s] and y != 685 and var_baixo == True:
+            if var_som > 8:
+                som_passos.play()
+                var_som = 0
             if pegar_bota == False:
                 y += 4
             var_parado = 0
@@ -780,11 +879,11 @@ def main():
                 vida_almoco -= 1
                 points += 1
                 inimigos.remove(enemies)
-                if vida_almoco == 0:
-                    tela.blit(texto_perdeu, (250, 300))
-                    var_pause = True
+                som_dano_geladeira.play()
+                tela.blit(texto_perdeu, (250, 300))
+                var_pause = True
 
-        if points >= 150:
+        if points >= 500:
             tela.blit(texto_ganhou, (250, 300))
             var_pause = True
 

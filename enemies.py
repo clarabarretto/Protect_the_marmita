@@ -9,7 +9,7 @@ class Enemies(pygame.sprite.Sprite):
         self.sprites = []
         self.sprites.append(pygame.image.load('sprites/inimigo1_1.png'))
         self.sprites.append(pygame.image.load('sprites/inimigo1_2.png'))
-        self.inicio = 60
+        self.inicio = 80
         self.numero = randint(1,5)
         if self.numero <= 2:
             self.escolha = 'player'
@@ -35,13 +35,13 @@ class Enemies(pygame.sprite.Sprite):
         elif self.x == 1080:
             self.x -= 2
         elif self.inicio > 0:
-            if self.x > 0 and self.x <= 120:
+            if self.x > 0 and self.x <= 160:
                 self.x += 2
-            elif self.x <= 1080 and self.x >= 960:
+            elif self.x <= 1080 and self.x >= 920:
                 self.x -= 2
-            elif self.y > 0 and self.y <= 120:
+            elif self.y > 0 and self.y <= 160:
                 self.y += 2
-            elif self.y <= 720 and self.y >= 600:
+            elif self.y <= 720 and self.y >= 560:
                 self.y -= 2
         elif self.escolha == 'geladeira':
             if self.x == x2 and self.y < y2:

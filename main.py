@@ -101,7 +101,6 @@ def menu():
 def main():
     coordenadas = [(0, 520), (0, 480), (0, 560), (720, 520), (720, 480), (720, 560),
                    (320, 0), (320, 1080), (360, 0), (360, 1080), (400, 0), (400, 1080)]
-    space = False
     var_pause = False
     points = 0
     x = 520
@@ -784,8 +783,7 @@ def main():
         mensage = f"score : {points}"
         text = fonte.render(mensage, False, (255, 255, 255))
         tela.blit(text, (960, 10))
-        # if space == False:
-        # tela.blit(texto_inicial, (500, 240))      #esse era o if que apagava o nome 'assacinato'
+            #esse era o if que apagava o nome 'assacinato'
 
         inimigos.update()
         bala.update()

@@ -1,6 +1,6 @@
+import pygame
 from pygame.locals import *
 from random import randint
-
 
 def dropar_vida(x, y):
     chance = randint(1, 25)
@@ -68,3 +68,29 @@ def dropar_ceifador(x, y):
 
     lista_coordenadas_ceifador.append(drop)
     return lista_coordenadas_ceifador
+
+class Moedas(pygame.sprite.Sprite):
+    def __init__(self,  x, y):
+        pygame.sprite.Sprite.__init__(self)
+        self.sprites = []
+        self.sprites.append(pygame.image.load('sprites/moeda1.1.png'))
+        self.sprites.append(pygame.image.load('sprites/moeda3.png'))
+        self.sprites.append(pygame.image.load('sprites/moeda5.png'))
+        self.numero = randint(1,10)
+        if self.numero <= 3:
+            self.escolha = 'moeda3'
+            self.atual = 1
+        elif self.numero >= 5:
+            self.escolha = 'moeda1'
+            self.atual = 0
+        else:
+            self.escolha = 'moeda5'
+            self.atual = 2
+        self.image = self.sprites[self.atual]
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        self.rect.topleft = self.x, self.y
+    def identify_moeda(self):
+        return self.escolha
+

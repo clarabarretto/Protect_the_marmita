@@ -1,6 +1,6 @@
 # Protect the Marmita.
 
-  Untitled Wizard Game é um jogo top-down shooter desenvolvido usando Pygame baseado no minigame Journey of The Prairie King de Stardew Valley, de onde tiramos grande parte da jogabilidade e algumas sprites também. O jogador controla um atirador e deve matar hordas de ladrões de marmitas para coletar alguns itens especiais que vão te ajudar nessa jornada até que consiga vencer todos os inimigos que vierem tentar terminar com o jogo.
+  Protect The Marmita é um jogo top-down shooter desenvolvido usando Pygame baseado no minigame Journey of The Prairie King de Stardew Valley, de onde tiramos grande parte da jogabilidade e algumas sprites também. O jogador controla um atirador e deve matar hordas de ladrões de marmitas para coletar alguns itens especiais que vão te ajudar nessa jornada até que consiga vencer todos os inimigos que vierem tentar terminar com o jogo.
   O jogador começa a fase com 5 corações de vida, perdendo um de vida sempre que colide com um inimigo, a bota aumenta a velocidade do seu persoangem facilitando na hora de se movimentar pelo mapa e a arma é o item especial do jogo que faz com que as balas vão em todas as direções. Ambas são upgrades permanentes enquanto os corações são itens consumíveis, podendo ter mais de um na tela ao mesmo tempo. 
 #
 ## Equipe:

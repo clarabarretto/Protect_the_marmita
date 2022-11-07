@@ -65,15 +65,15 @@
   
 #
 ## Organização do código:
-  Sounds: Uma pasta que contém todos os sons utilizados no jogo.
-  Sprites: Pasta que salva os arquivos de imagens utilizados no jogo, tanto em personagens, objetos e mapa.
-  drops.py: Módulo específico para as funcionalidade de drop de itens.
-  enemies.py: Módulo com as funções responsáveis pela criação e definição de ação dos inimigos.
-  mapa.py: Módulo específico para a criação e definição do mapa com as sprites sendo alocadas de acordo com a definição em matriz do mapa.
-  obstáculo.py: Módulo responsável pelas interações, contendo as funções necessárias para a ocorrência delas.
-  personagem.py: Módulo que define o personagem juntamente com suas funcionalidades.
-  projetil.py: Módulo que é responsável pela física e aplicabilidade dos projeteis utilizados mo jogo (as balas do personagem principal).
-  main.py: Onde o laço principal responsável pelo jogo é encontrado. Aqui também é o local onde todos os outros módulos são importados e colocados em uso no laço principal.
+  >Sounds: Uma pasta que contém todos os sons utilizados no jogo.
+  >Sprites: Pasta que salva os arquivos de imagens utilizados no jogo, tanto em personagens, objetos e mapa.
+  >drops.py: Módulo específico para as funcionalidade de drop de itens.
+  >enemies.py: Módulo com as funções responsáveis pela criação e definição de ação dos inimigos.
+  >mapa.py: Módulo específico para a criação e definição do mapa com as sprites sendo alocadas de acordo com a definição em matriz do mapa.
+  >obstáculo.py: Módulo responsável pelas interações, contendo as funções necessárias para a ocorrência delas.
+  >personagem.py: Módulo que define o personagem juntamente com suas funcionalidades.
+  >projetil.py: Módulo que é responsável pela física e aplicabilidade dos projeteis utilizados mo jogo (as balas do personagem principal).
+  >main.py: Onde o laço principal responsável pelo jogo é encontrado. Aqui também é o local onde todos os outros módulos são importados e colocados em uso no laço principal.
   
 #
 ## Desafios/Experiência:

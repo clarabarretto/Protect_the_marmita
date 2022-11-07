@@ -64,7 +64,7 @@
   Por fim os conceitos que acredito que tenham sido os mais utilizados na produção do jogo, foram o de condicionais e classe. As condicionaus estão prezentes em todo o código, servindo como direção para o compilador, assim como um jogo depende literamete da situação específica que esta acontecendo naquele loop do laço do jogo pricipal, as situações possiveis e suas respostas devem estar contidas neles, e são organizadas e indicadas pelas condicionais. As classes, são a base do jogo, responsáveis pela base da criação de inimigos, balas e objetos do nosso jogo, o que demosntra a grande participação desse conceito em todo nosso projeto e sua importância.  
   
 #
-##Organização do código:
+## Organização do código:
   Sounds: Uma pasta que contém todos os sons utilizados no jogo.
   Sprites: Pasta que salva os arquivos de imagens utilizados no jogo, tanto em personagens, objetos e mapa.
   drops.py: Módulo específico para as funcionalidade de drop de itens.

@@ -16,12 +16,15 @@ pygame.init()
 larg = 1080
 alt = 720
 fonte = pygame.font.SysFont('arial', 20, True, True)
-fonte_inicial = pygame.font.SysFont('arial', 3000, True, False)
-fonte2 = pygame.font.SysFont('arial', 120, True, False)
+fonte_inicial = pygame.font.SysFont('Arial', 120, False, False)
+fonte_final = pygame.font.SysFont('Arial', 30, False, False)
 tela = pygame.display.set_mode((larg, alt))
-texto_inicial = fonte.render('Protect the Marmita!', False, (0, 0, 0))
+texto_inicial = fonte.render('AssaCInato!', False, (0, 0, 0))
 pygame.display.set_caption('Protect the Marmita!')
 menu_image = pygame.image.load('sprites/menu.jpg')
+fundo_final = pygame.image.load('sprites/fundoestrelas.png')
+texto_perdeu = fonte_inicial.render('YOU LOST!', False, (255, 0, 0))
+texto_ganhou = fonte_inicial.render("YOU WON!", False, (0, 255, 0))
 
 pygame.mixer.init()
 
@@ -57,8 +60,25 @@ def gun_dispare(x, y, bala):
     bala.add(pr.Bala(x - 1, y + 17, 'esquerda'))
     bala.add(pr.Bala(x + 25, y + 17, 'direita'))
     return bala
-def pause():
+def pause(var, pontos):
     while True:
+        tela.blit(fundo_final, (0, 0))
+        if var == 'perdeu':
+            mensagem_restart = 'Press R for restart'
+            mensagem_perdeu = f'Sua pontuação foi: {pontos}'
+            tela.blit(texto_perdeu, (270, 200))
+            texto_final_pontuacao_perdeu = fonte_final.render(mensagem_perdeu, False, (255, 255, 255))
+            texto_restart = fonte_final.render(mensagem_restart, False, (255, 255, 255))
+            tela.blit(texto_final_pontuacao_perdeu, (400, 340))
+            tela.blit(texto_restart, (410, 480))
+        elif var == 'ganhou':
+            mensagem_perdeu = f'Sua pontuação foi: {pontos}'
+            mensagem_restart = 'Press R for restart'
+            tela.blit(texto_ganhou, (260, 200))
+            texto_final_pontuacao_perdeu = fonte_final.render(mensagem_perdeu, False, (255, 255, 255))
+            texto_restart = fonte_final.render(mensagem_restart, False, (255, 255, 255))
+            tela.blit(texto_final_pontuacao_perdeu, (400, 340))
+            tela.blit(texto_restart, (410, 480))
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -66,6 +86,8 @@ def pause():
             if event.type == KEYDOWN:
                 if event.key == K_r:
                     main()
+    
+        pygame.display.update()
 
 
 def cria_Botao(msg, x, y, larg, alt, hover, cor):
@@ -86,7 +108,6 @@ def cria_Botao(msg, x, y, larg, alt, hover, cor):
 
 
 def menu():
-
     while True:
         tela.blit(menu_image, (0, 0))
         cria_Botao("JOGAR", ((larg / 2)), ((alt / 2)),
@@ -113,6 +134,7 @@ def main():
     relogio = pygame.time.Clock()
     var_tempo = 0
     qntd_inimigos = 0
+    resultado = ''
 
     
 
@@ -184,8 +206,6 @@ def main():
     pegar_vida = False
     lista_drop_vida = list()
     listatempvida = list()
-    texto_perdeu = fonte2.render('YOU LOSE!', False, (255, 0, 0))
-    texto_ganhou = fonte2.render("YOU WON!", False, (0, 255, 0))
     lista_barra_vida = [[5, 5], [58, 5], [111, 5], [164, 5], [217, 5]]
     coordenadas_vida = ([5, 5], [58, 5], [111, 5], [164, 5], [217, 5])
     lista_passagem_vida = []
@@ -197,7 +217,7 @@ def main():
 
     while True:
         if var_pause == True:
-            pause()
+            pause(resultado, points)
         var_tempo_gun_drop -= 1
         var_tempo_bota_drop -= 1
         var_tempo_cartucho_drop -= 1
@@ -909,7 +929,7 @@ def main():
                         inimigos.remove(enemies)
                         quantidade = len(lista_barra_vida) - 1
                         del lista_barra_vida[quantidade]
-                        tela.blit(texto_perdeu, (250, 300))
+                        resultado = 'perdeu'
                         var_pause = True
                         tela.blit(coracao_morto, (5, 5))
 
@@ -918,11 +938,11 @@ def main():
                 vida_almoco -= 1
                 inimigos.remove(enemies)
                 som_dano_geladeira.play()
-                tela.blit(texto_perdeu, (250, 300))
+                resultado = 'perdeu'
                 var_pause = True
 
-        if points >= 250:
-            tela.blit(texto_ganhou, (250, 300))
+        if qntd_inimigos == 500 and len(inimigos) == 0:
+            resultado = 'ganhou'
             var_pause = True
 
         inimigos.draw(tela)

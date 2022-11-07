@@ -70,7 +70,11 @@
 >
 >Portanto, após a produção desse projeto, podemos olhar para trás e perceber o quão importanteé um planejamento e a organização de equipe, uma pequena equipe bem entrosada e definida consegue fazer algo muito mais bem feito do que uma gigante que não se ajuda. Assim fica a lição aprendida nesse trabalho é que nunca se sabe tudo, sempre alguém poderá ajudar naquilo que é preciso e que se deve ter humildde para aceitar essa ajuda.
   
-  
+#
+## Organização do Código
+>
+
+
 #
 #
 ## Imagens do jogo:

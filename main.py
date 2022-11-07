@@ -127,6 +127,10 @@ def main():
     ceifador_imagem = pygame.image.load('sprites/deadall.png')
     cartucho_imagem = pygame.image.load('sprites/cartuchorapido.png')
 
+    moeda1tela = pygame.image.load('sprites/moeda1.png')
+    moeda3tela = pygame.image.load('sprites/moeda3tela.png')
+    moeda5tela = pygame.image.load('sprites/moeda5tela.png')
+
     todas_as_sprites = pygame.sprite.Group()
     sprite_almoco = pygame.sprite.Group()
     almoco = Almoco()
@@ -246,6 +250,21 @@ def main():
             tela.blit(coracao_morto, (r[0], r[1]))
         for c in lista_barra_vida:
             tela.blit(coracao_vivo, (c[0], c[1]))
+        #barra de moedas
+        tela.blit(moeda1tela, (0, 55))
+        mensage_m1 = f"X {moeda1}"
+        text_m1 = fonte.render(mensage_m1, False, (255, 255, 255))
+        tela.blit(text_m1, (43, 65))
+
+        tela.blit(moeda3tela, (0, 110))
+        mensage_m3 = f"X {moeda3}"
+        text_m3 = fonte.render(mensage_m3, False, (255, 255, 255))
+        tela.blit(text_m3, (43, 120))
+
+        tela.blit(moeda5tela, (0, 165))
+        mensage_m5 = f"X {moeda5}"
+        text_m5 = fonte.render(mensage_m5, False, (255, 255, 255))
+        tela.blit(text_m5, (43, 175))
 
         for tiro in bala:
             tiro.movimentobala()

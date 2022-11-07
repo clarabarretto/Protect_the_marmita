@@ -32,6 +32,8 @@
   | **Boots of Swiftness** | aumento da velocidade do personagem por um tempo específico |
   | **Heart Pieces** | aumenta em uma unidade a vida máxima |
   | **Special Gun** | ativa tiros em todas as direções possíveis temporariamente |
+  | **Fast Shots** | A cadência de tiros aumenta |
+  | **Reaper** | Todos inimigos são derrotados de uma vez só |
 #
 
 ## Divisão de tarefas:

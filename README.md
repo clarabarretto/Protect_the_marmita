@@ -76,12 +76,9 @@
 ## Imagens do jogo:
 ![image](https://user-images.githubusercontent.com/108024639/200370835-4514f4d8-4a14-4f01-b3be-b8e46dc40305.png)
 #
-![image](https://user-images.githubusercontent.com/108024639/200370067-5347eb50-9d44-4537-8964-9cbfe7fd1d60.png)
+![image](https://user-images.githubusercontent.com/108024639/200372055-53cb7f81-067e-444e-88b0-7cd009d7f490.png)
 #
-![image](https://user-images.githubusercontent.com/108024639/200371492-185eb400-d65d-4886-8b3c-d9051c8f9ecf.png)
-#
-![image](https://user-images.githubusercontent.com/108024639/200371155-eb385f75-17f0-4321-bc46-bda9f40a18f0.png)
-#
-![image](https://user-images.githubusercontent.com/108024639/200371444-6d5db66d-6d46-4eb9-83fd-2e3a86f3b43e.png)
+![image](https://user-images.githubusercontent.com/108024639/200372358-2d823c9f-51c7-493c-9dd9-3b546899c87a.png)
+
 
 

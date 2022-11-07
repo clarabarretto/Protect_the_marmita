@@ -543,7 +543,7 @@ def main():
             if tiro.rect.colliderect(almoco):
                 bala.remove(tiro)
 
-        if qntd_inimigos <= 499:
+        if qntd_inimigos <= 99:
             if qntd_inimigos < 50:
                 if 18 <= var_inimigo <= 20:
                     inimigos.add(en.Enemies(spawn[1], spawn[0]))
@@ -941,7 +941,11 @@ def main():
                 resultado = 'perdeu'
                 var_pause = True
 
-        if qntd_inimigos == 100 and len(inimigos) == 0:
+        # if qntd_inimigos == 100 and len(inimigos) == 0:
+        #     resultado = 'ganhou'
+        #     var_pause = True
+
+        if qntd_inimigos == 100:
             resultado = 'ganhou'
             var_pause = True
 

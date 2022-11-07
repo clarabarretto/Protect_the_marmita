@@ -186,6 +186,11 @@ def main():
     coordenadas_vida = ([5, 5], [58, 5], [111, 5], [164, 5], [217, 5])
     lista_passagem_vida = []
 
+    moedas = pygame.sprite.Group()
+    moeda1 = 0
+    moeda3 = 0
+    moeda5 = 0
+
     while True:
         if var_pause == True:
             pause()
@@ -340,6 +345,9 @@ def main():
                     x_inimigo = enemies.coord_x()
                     y_inimigo = enemies.coord_y()
                     som_morte_inimigo.play()
+                    escolha_moedas = randint(1, 100)
+                    if escolha_moedas <= 19:
+                        moedas.add(drops.Moedas(enemies.coord_x(), enemies.coord_y()))
                     drop = drops.dropar_vida(x_inimigo, y_inimigo)
                     drop2 = drops.dropar_bota(x_inimigo, y_inimigo)
                     drop3 = drops.dropar_gun(x_inimigo, y_inimigo)
@@ -393,8 +401,20 @@ def main():
                         copia5 = listatempceifador[:]
                         lista_ceifador.append(copia5)
                         listatempceifador.clear()
-                    points += 1
 
+        for sprite in todas_as_sprites:
+            for moeda in moedas:
+                if sprite.rect.colliderect(moeda):
+                    if moeda.identify_moeda() == 'moeda1':
+                        moeda1 += 1
+                        points += 1
+                    elif moeda.identify_moeda() == 'moeda3':
+                        moeda3 += 1
+                        points += 3
+                    elif moeda.identify_moeda() == 'moeda5':
+                        moeda5 += 1
+                        points += 5
+                    moedas.remove(moeda)
 
 
         for tiro in bala:
@@ -434,7 +454,7 @@ def main():
             for enemie in inimigos:
                 inimigos.remove(enemie)
                 som_morte_inimigo.play()
-                points += 1
+                
 
 
         for c in lista_ceifador:
@@ -490,11 +510,11 @@ def main():
                     inimigos.add(en.Enemies(spawn[1], spawn[0]))
                     qntd_inimigos += 1
             elif qntd_inimigos >= 50 and qntd_inimigos < 200:
-                if 15 <= var_inimigo <= 20:
+                if 16 <= var_inimigo <= 20:
                     inimigos.add(en.Enemies(spawn[1], spawn[0]))
                     qntd_inimigos += 1
             elif qntd_inimigos >= 200 and qntd_inimigos < 250:
-                if 12 <= var_inimigo <= 20:
+                if 14 <= var_inimigo <= 20:
                     inimigos.add(en.Enemies(spawn[1], spawn[0]))
                     qntd_inimigos += 1
             elif qntd_inimigos >= 250 and qntd_inimigos < 300:
@@ -502,19 +522,19 @@ def main():
                     inimigos.add(en.Enemies(spawn[1], spawn[0]))
                     qntd_inimigos += 1
             elif qntd_inimigos >= 300 and qntd_inimigos < 350:
-                if 15 <= var_inimigo <= 20:
+                if 16 <= var_inimigo <= 20:
                     inimigos.add(en.Enemies(spawn[1], spawn[0]))
                     qntd_inimigos += 1
             elif qntd_inimigos >= 350 and qntd_inimigos < 400:
-                if 12 <= var_inimigo <= 20:
+                if 14 <= var_inimigo <= 20:
                     inimigos.add(en.Enemies(spawn[1], spawn[0]))
                     qntd_inimigos += 1
             elif qntd_inimigos >= 400 and qntd_inimigos < 450:
-                if 15 <= var_inimigo <= 20:
+                if 16 <= var_inimigo <= 20:
                     inimigos.add(en.Enemies(spawn[1], spawn[0]))
                     qntd_inimigos += 1
             elif qntd_inimigos >= 450 and qntd_inimigos < 500:
-                if 12 <= var_inimigo <= 20:
+                if 14 <= var_inimigo <= 20:
                     inimigos.add(en.Enemies(spawn[1], spawn[0]))
                     qntd_inimigos += 1
             elif qntd_inimigos >= 500 and qntd_inimigos < 550:
@@ -522,11 +542,11 @@ def main():
                     inimigos.add(en.Enemies(spawn[1], spawn[0]))
                     qntd_inimigos += 1
             elif qntd_inimigos >= 550 and qntd_inimigos < 700:
-                if 15 <= var_inimigo <= 20:
+                if 16 <= var_inimigo <= 20:
                     inimigos.add(en.Enemies(spawn[1], spawn[0]))
                     qntd_inimigos += 1
             elif qntd_inimigos >= 700 and qntd_inimigos < 800:
-                if 12 <= var_inimigo <= 20:
+                if 14 <= var_inimigo <= 20:
                     inimigos.add(en.Enemies(spawn[1], spawn[0]))
                     qntd_inimigos += 1
             elif qntd_inimigos >= 800 and qntd_inimigos < 850:
@@ -538,7 +558,7 @@ def main():
                     inimigos.add(en.Enemies(spawn[1], spawn[0]))
                     qntd_inimigos += 1
             elif qntd_inimigos >= 900 and qntd_inimigos < 1000:
-                if 12 <= var_inimigo <= 20:
+                if 14 <= var_inimigo <= 20:
                     inimigos.add(en.Enemies(spawn[1], spawn[0]))
                     qntd_inimigos += 1
 
@@ -877,7 +897,6 @@ def main():
         for enemies in inimigos:
             if enemies.rect.colliderect(almoco):
                 vida_almoco -= 1
-                points += 1
                 inimigos.remove(enemies)
                 som_dano_geladeira.play()
                 tela.blit(texto_perdeu, (250, 300))
@@ -898,7 +917,8 @@ def main():
         text = fonte.render(mensage, False, (255, 255, 255))
         tela.blit(text, (960, 10))
             #esse era o if que apagava o nome 'assacinato'
-
+        moedas.draw(tela)
+        moedas.update()
         inimigos.update()
         bala.update()
         sprite_almoco.draw(tela)

@@ -941,7 +941,7 @@ def main():
                 resultado = 'perdeu'
                 var_pause = True
 
-        if qntd_inimigos == 500 and len(inimigos) == 0:
+        if qntd_inimigos == 100 and len(inimigos) == 0:
             resultado = 'ganhou'
             var_pause = True
 

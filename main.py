@@ -385,7 +385,7 @@ def main():
                     y_inimigo = enemies.coord_y()
                     som_morte_inimigo.play()
                     escolha_moedas = randint(1, 100)
-                    if escolha_moedas <= 19:
+                    if escolha_moedas <= 29:
                         moedas.add(drops.Moedas(enemies.coord_x(), enemies.coord_y()))
                     drop = drops.dropar_vida(x_inimigo, y_inimigo)
                     drop2 = drops.dropar_bota(x_inimigo, y_inimigo)

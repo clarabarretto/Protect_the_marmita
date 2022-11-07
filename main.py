@@ -184,7 +184,7 @@ def main():
     pegar_vida = False
     lista_drop_vida = list()
     listatempvida = list()
-    texto_perdeu = fonte2.render('FOI DE F!', False, (255, 0, 0))
+    texto_perdeu = fonte2.render('YOU LOSE!', False, (255, 0, 0))
     texto_ganhou = fonte2.render("YOU WON!", False, (0, 255, 0))
     lista_barra_vida = [[5, 5], [58, 5], [111, 5], [164, 5], [217, 5]]
     coordenadas_vida = ([5, 5], [58, 5], [111, 5], [164, 5], [217, 5])
@@ -921,7 +921,7 @@ def main():
                 tela.blit(texto_perdeu, (250, 300))
                 var_pause = True
 
-        if points >= 500:
+        if points >= 250:
             tela.blit(texto_ganhou, (250, 300))
             var_pause = True
 
